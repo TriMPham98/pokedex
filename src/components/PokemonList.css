@@ -1,38 +1,51 @@
 /* PokemonList.css */
-.pokemon-list-container {
+.pokemon-grid-container {
   background-color: #1a1a1a;
   color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.pokemon-list-title {
+.pokemon-grid-title {
   color: #bb86fc;
   text-align: center;
   margin-bottom: 20px;
 }
 
-.pokemon-list {
-  list-style-type: none;
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
   padding: 0;
 }
 
-.pokemon-list-item {
+.pokemon-grid-item {
   background-color: #2d2d2d;
-  margin: 10px 0;
   padding: 15px;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
 }
 
-.pokemon-list-item:hover {
-  background-color: #3d3d3d;
+.pokemon-grid-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .pokemon-name {
   color: #03dac6;
   font-weight: bold;
   text-transform: capitalize;
+  margin-top: 10px;
+}
+
+.pokemon-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
 }

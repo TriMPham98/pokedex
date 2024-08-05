@@ -7,20 +7,33 @@ function PokemonList() {
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
       .then((response) => response.json())
-      .then((data) => setPokemon(data.results))
+      .then((data) => {
+        // Fetch detailed data for each Pokémon
+        const fetchDetailedData = data.results.map((p) =>
+          fetch(p.url).then((res) => res.json())
+        );
+        Promise.all(fetchDetailedData).then((detailedPokemon) => {
+          setPokemon(detailedPokemon);
+        });
+      })
       .catch((error) => console.error("Error fetching Pokémon:", error));
   }, []);
 
   return (
-    <div className="pokemon-list-container">
-      <h2 className="pokemon-list-title">Pokémon List</h2>
-      <ul className="pokemon-list">
-        {pokemon.map((p, index) => (
-          <li key={index} className="pokemon-list-item">
+    <div className="pokemon-grid-container">
+      <h2 className="pokemon-grid-title">Pokémon Grid</h2>
+      <div className="pokemon-grid">
+        {pokemon.map((p) => (
+          <div key={p.id} className="pokemon-grid-item">
+            <img
+              src={p.sprites.front_default}
+              alt={p.name}
+              className="pokemon-image"
+            />
             <span className="pokemon-name">{p.name}</span>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

@@ -25,6 +25,7 @@ const typeColors = {
 function PokemonDetail({ pokemon, onClose }) {
   const detailRef = useRef(null);
   const [evolutionChain, setEvolutionChain] = useState([]);
+  const [evolutionSprites, setEvolutionSprites] = useState([]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -57,6 +58,18 @@ function PokemonDetail({ pokemon, onClose }) {
         }
 
         setEvolutionChain(chain);
+
+        // Fetch sprites for each evolution
+        const sprites = await Promise.all(
+          chain.map(async (name) => {
+            const response = await fetch(
+              `https://pokeapi.co/api/v2/pokemon/${name}`
+            );
+            const data = await response.json();
+            return data.sprites.front_default;
+          })
+        );
+        setEvolutionSprites(sprites);
       } catch (error) {
         console.error("Error fetching evolution chain:", error);
       }
@@ -69,7 +82,7 @@ function PokemonDetail({ pokemon, onClose }) {
 
   const mainType = pokemon.types[0].type.name;
   const backgroundColor = typeColors[mainType] || "#FFFFFF";
-  const statColor = backgroundColor; // Using main color without transparency for stat bars
+  const statColor = backgroundColor;
 
   return (
     <div className="pokemon-detail-overlay">
@@ -77,13 +90,10 @@ function PokemonDetail({ pokemon, onClose }) {
         className="pokemon-detail-content"
         ref={detailRef}
         style={{ backgroundColor: `${backgroundColor}CC` }}>
-        {" "}
-        {/* Reduced transparency */}
         <button className="close-button" onClick={onClose}>
           &times;
         </button>
-        <h2 style={{ color: "#FFFFFF" }}>{pokemon.name}</h2>{" "}
-        {/* Changed to white for better contrast */}
+        <h2 style={{ color: "#FFFFFF" }}>{pokemon.name}</h2>
         <img
           src={pokemon.sprites.other["official-artwork"].front_default}
           alt={pokemon.name}
@@ -134,15 +144,22 @@ function PokemonDetail({ pokemon, onClose }) {
         </div>
         <div className="pokemon-evolution">
           <h3>Evolution Chain:</h3>
-          <ul>
+          <div className="evolution-chain">
             {evolutionChain.map((stage, index) => (
-              <li
+              <div
                 key={index}
-                className={stage === pokemon.name ? "current-evolution" : ""}>
-                {stage}
-              </li>
+                className={`evolution-stage ${
+                  stage === pokemon.name ? "current-evolution" : ""
+                }`}>
+                <img
+                  src={evolutionSprites[index]}
+                  alt={stage}
+                  className="evolution-sprite"
+                />
+                <span>{stage}</span>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </div>

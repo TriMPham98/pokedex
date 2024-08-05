@@ -25,9 +25,12 @@ const typeColors = {
 
 function PokemonList() {
   const [pokemon, setPokemon] = useState([]);
+  const [filteredPokemon, setFilteredPokemon] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState("");
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -52,6 +55,7 @@ function PokemonList() {
         );
 
         setPokemon(pokemonDetails);
+        setFilteredPokemon(pokemonDetails);
         setIsLoading(false);
       } catch (e) {
         console.error("Error fetching Pokémon:", e);
@@ -62,6 +66,17 @@ function PokemonList() {
 
     fetchPokemon();
   }, []);
+
+  useEffect(() => {
+    const filtered = pokemon.filter((p) => {
+      const nameMatch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const typeMatch =
+        selectedType === "" ||
+        p.types.some((t) => t.type.name === selectedType);
+      return nameMatch && typeMatch;
+    });
+    setFilteredPokemon(filtered);
+  }, [searchTerm, selectedType, pokemon]);
 
   const handlePokemonClick = (clickedPokemon) => {
     setSelectedPokemon(clickedPokemon);
@@ -78,6 +93,14 @@ function PokemonList() {
     );
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleTypeChange = (e) => {
+    setSelectedType(e.target.value);
+  };
+
   if (isLoading) {
     return <div className="loading">Loading Pokémon...</div>;
   }
@@ -89,8 +112,28 @@ function PokemonList() {
   return (
     <div className="pokemon-grid-container">
       <h2 className="pokemon-grid-title">Pokémon Grid</h2>
+      <div className="pokemon-filters">
+        <input
+          type="text"
+          placeholder="Search Pokémon"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="pokemon-search"
+        />
+        <select
+          value={selectedType}
+          onChange={handleTypeChange}
+          className="pokemon-type-filter">
+          <option value="">All Types</option>
+          {Object.keys(typeColors).map((type) => (
+            <option key={type} value={type}>
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="pokemon-grid">
-        {pokemon.map((p) => (
+        {filteredPokemon.map((p) => (
           <div
             key={p.id}
             className="pokemon-grid-item"

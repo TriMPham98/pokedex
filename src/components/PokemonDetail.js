@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import "./PokemonDetail.css";
 
 function PokemonDetail({ pokemon, onClose }) {
+  const detailRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (detailRef.current && !detailRef.current.contains(event.target)) {
+        onClose();
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   if (!pokemon) return null;
 
   return (
     <div className="pokemon-detail-overlay">
-      <div className="pokemon-detail-content">
+      <div className="pokemon-detail-content" ref={detailRef}>
         <button className="close-button" onClick={onClose}>
           &times;
         </button>

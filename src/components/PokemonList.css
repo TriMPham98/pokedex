@@ -92,3 +92,15 @@
     height: 100px;
   }
 }
+
+.loading,
+.error {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2em;
+  color: #ffffff;
+}
+
+.error {
+  color: #ff6b6b;
+}

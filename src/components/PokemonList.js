@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./PokemonList.css";
 import PokemonDetail from "./PokemonDetail";
 
-// Define type colors
 const typeColors = {
   normal: "#A8A77A",
   fire: "#EE8130",
@@ -27,19 +26,41 @@ const typeColors = {
 function PokemonList() {
   const [pokemon, setPokemon] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=1024")
-      .then((response) => response.json())
-      .then((data) => {
-        const fetchDetailedData = data.results.map((p) =>
-          fetch(p.url).then((res) => res.json())
+    const fetchPokemon = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          "https://pokeapi.co/api/v2/pokemon?limit=151"
         );
-        Promise.all(fetchDetailedData).then((detailedPokemon) => {
-          setPokemon(detailedPokemon);
-        });
-      })
-      .catch((error) => console.error("Error fetching Pokémon:", error));
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        const pokemonDetails = await Promise.all(
+          data.results.map(async (p) => {
+            const res = await fetch(p.url);
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+        );
+
+        setPokemon(pokemonDetails);
+        setIsLoading(false);
+      } catch (e) {
+        console.error("Error fetching Pokémon:", e);
+        setError(e.message);
+        setIsLoading(false);
+      }
+    };
+
+    fetchPokemon();
   }, []);
 
   const handlePokemonClick = (clickedPokemon) => {
@@ -49,6 +70,21 @@ function PokemonList() {
   const handleCloseDetail = () => {
     setSelectedPokemon(null);
   };
+
+  const getAnimatedSpriteUrl = (pokemon) => {
+    return (
+      pokemon.sprites.versions?.["generation-v"]?.["black-white"]?.animated
+        ?.front_default || pokemon.sprites.front_default
+    );
+  };
+
+  if (isLoading) {
+    return <div className="loading">Loading Pokémon...</div>;
+  }
+
+  if (error) {
+    return <div className="error">Error: {error}</div>;
+  }
 
   return (
     <div className="pokemon-grid-container">
@@ -60,7 +96,7 @@ function PokemonList() {
             className="pokemon-grid-item"
             onClick={() => handlePokemonClick(p)}>
             <img
-              src={p.sprites.front_default}
+              src={getAnimatedSpriteUrl(p)}
               alt={p.name}
               className="pokemon-image"
             />

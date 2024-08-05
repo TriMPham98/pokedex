@@ -14,8 +14,8 @@
 .pokemon-detail-content {
   padding: 20px;
   border-radius: 10px;
-  max-width: 500px;
-  width: 90%;
+  max-width: 700px; /* Increased from 500px */
+  width: 95%; /* Increased from 90% */
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -72,7 +72,7 @@
 }
 
 .stat-name {
-  width: 100px;
+  width: 120px; /* Increased from 100px for better alignment */
   text-align: right;
   margin-right: 10px;
   font-weight: bold;

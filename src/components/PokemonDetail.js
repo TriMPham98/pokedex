@@ -103,6 +103,8 @@ function PokemonDetail({ pokemon, onClose }) {
   const backgroundColor = typeColors[mainType] || "#FFFFFF";
   const statColor = backgroundColor;
 
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
   return (
     <div className="pokemon-detail-overlay">
       <div
@@ -112,7 +114,7 @@ function PokemonDetail({ pokemon, onClose }) {
         <button className="close-button" onClick={onClose}>
           &times;
         </button>
-        <h2 style={{ color: "#FFFFFF" }}>{pokemon.name}</h2>
+        <h2 style={{ color: "#FFFFFF" }}>{pokemon.name.toUpperCase()}</h2>
         <img
           src={pokemon.sprites.other["official-artwork"].front_default}
           alt={pokemon.name}
@@ -180,7 +182,7 @@ function PokemonDetail({ pokemon, onClose }) {
                     alt={stage}
                     className="evolution-sprite"
                   />
-                  <span>{stage}</span>
+                  <span>{capitalize(stage)}</span>
                 </div>
               </React.Fragment>
             ))}

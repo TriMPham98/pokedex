@@ -103,7 +103,11 @@ function PokemonDetail({ pokemon, onClose }) {
   const backgroundColor = typeColors[mainType] || "#FFFFFF";
   const statColor = backgroundColor;
 
-  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+  const capitalize = (str) =>
+    str
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
 
   return (
     <div className="pokemon-detail-overlay">
@@ -132,7 +136,7 @@ function PokemonDetail({ pokemon, onClose }) {
               <li
                 key={index}
                 style={{ backgroundColor: typeColors[type.type.name] }}>
-                {type.type.name}
+                {capitalize(type.type.name)}
               </li>
             ))}
           </ul>
@@ -141,7 +145,7 @@ function PokemonDetail({ pokemon, onClose }) {
           <h3>Abilities:</h3>
           <ul>
             {pokemon.abilities.map((ability, index) => (
-              <li key={index}>{ability.ability.name}</li>
+              <li key={index}>{capitalize(ability.ability.name)}</li>
             ))}
           </ul>
         </div>
@@ -149,7 +153,7 @@ function PokemonDetail({ pokemon, onClose }) {
           <h3>Stats:</h3>
           {pokemon.stats.map((stat, index) => (
             <div key={index} className="stat-bar-container">
-              <span className="stat-name">{stat.stat.name}</span>
+              <span className="stat-name">{capitalize(stat.stat.name)}</span>
               <div className="stat-bar">
                 <div
                   className="stat-fill"

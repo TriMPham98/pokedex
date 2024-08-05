@@ -26,6 +26,7 @@ function PokemonDetail({ pokemon, onClose }) {
   const detailRef = useRef(null);
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [evolutionSprites, setEvolutionSprites] = useState([]);
+  const [evolutionMethods, setEvolutionMethods] = useState([]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -50,14 +51,32 @@ function PokemonDetail({ pokemon, onClose }) {
         const evolutionChainData = await evolutionChainResponse.json();
 
         const chain = [];
+        const methods = [];
         let currentStage = evolutionChainData.chain;
 
         while (currentStage) {
           chain.push(currentStage.species.name);
+
+          if (currentStage.evolution_details.length > 0) {
+            const detail = currentStage.evolution_details[0];
+            let method = "";
+            if (detail.min_level) {
+              method = `Lv. ${detail.min_level}`;
+            } else if (detail.item) {
+              method = detail.item.name.replace("-", " ");
+            } else if (detail.trigger) {
+              method = detail.trigger.name.replace("-", " ");
+            }
+            methods.push(method);
+          } else {
+            methods.push("");
+          }
+
           currentStage = currentStage.evolves_to[0];
         }
 
         setEvolutionChain(chain);
+        setEvolutionMethods(methods);
 
         // Fetch sprites for each evolution
         const sprites = await Promise.all(
@@ -146,18 +165,24 @@ function PokemonDetail({ pokemon, onClose }) {
           <h3>Evolution Chain:</h3>
           <div className="evolution-chain">
             {evolutionChain.map((stage, index) => (
-              <div
-                key={index}
-                className={`evolution-stage ${
-                  stage === pokemon.name ? "current-evolution" : ""
-                }`}>
-                <img
-                  src={evolutionSprites[index]}
-                  alt={stage}
-                  className="evolution-sprite"
-                />
-                <span>{stage}</span>
-              </div>
+              <React.Fragment key={index}>
+                {index > 0 && (
+                  <div className="evolution-method">
+                    {evolutionMethods[index] && `(${evolutionMethods[index]})`}
+                  </div>
+                )}
+                <div
+                  className={`evolution-stage ${
+                    stage === pokemon.name ? "current-evolution" : ""
+                  }`}>
+                  <img
+                    src={evolutionSprites[index]}
+                    alt={stage}
+                    className="evolution-sprite"
+                  />
+                  <span>{stage}</span>
+                </div>
+              </React.Fragment>
             ))}
           </div>
         </div>

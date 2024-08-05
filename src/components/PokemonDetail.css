@@ -109,7 +109,7 @@ h3 {
 
 .evolution-chain {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   margin-top: 10px;
@@ -138,4 +138,21 @@ h3 {
 .current-evolution .evolution-sprite {
   background-color: rgba(255, 255, 255, 0.4);
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.evolution-method {
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 5px;
+}
+
+.evolution-method::before,
+.evolution-method::after {
+  content: "";
+  height: 2px;
+  width: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  margin: 0 5px;
 }

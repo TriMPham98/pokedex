@@ -215,18 +215,23 @@ function PokemonDetail({ pokemon, onClose }) {
       };
       const effectivenessCount = {};
 
+      // Initialize effectivenessCount for all types
+      Object.keys(typeColors).forEach((type) => {
+        effectivenessCount[type] = 0;
+      });
+
       pokemon.types.forEach((typeObj) => {
         const type = typeObj.type.name;
         const typeEffects = typeEffectiveness[type];
 
         typeEffects.weaknesses.forEach((w) => {
-          effectivenessCount[w] = (effectivenessCount[w] || 0) + 1;
+          effectivenessCount[w] += 1;
         });
         typeEffects.resistances.forEach((r) => {
-          effectivenessCount[r] = (effectivenessCount[r] || 0) - 1;
+          effectivenessCount[r] -= 1;
         });
         typeEffects.immunities.forEach((i) => {
-          effectivenessCount[i] = -2;
+          effectivenessCount[i] = -99; // Use a very low number to ensure immunity takes precedence
         });
       });
 
@@ -235,7 +240,7 @@ function PokemonDetail({ pokemon, onClose }) {
         else if (count === 1) effectiveness.weaknesses.push(type);
         else if (count === -1) effectiveness.resistances.push(type);
         else if (count === -2) effectiveness.quadResistances.push(type);
-        else if (count <= -3) effectiveness.immunities.push(type);
+        else if (count <= -99) effectiveness.immunities.push(type);
       });
 
       setTypeEffectivenessData(effectiveness);

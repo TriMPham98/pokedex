@@ -158,9 +158,10 @@ function PokemonDetail({ pokemon, onClose }) {
           className="pokemon-detail-image"
         />
         <div className="pokemon-info">
-          <p>Height: {pokemon.height / 10} m</p>
-          <p>Weight: {pokemon.weight / 10} kg</p>
-          <p>Base Experience: {pokemon.base_experience}</p>
+          <p>
+            Height: {pokemon.height / 10} m | Weight: {pokemon.weight / 10} kg |
+            Base Exp: {pokemon.base_experience}
+          </p>
         </div>
         <div className="pokemon-types">
           <h3>Types:</h3>

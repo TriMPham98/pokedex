@@ -186,3 +186,7 @@ h3 {
   font-size: 0.9em;
   font-weight: bold;
 }
+
+.effectiveness-group li[data-effectiveness="quad"] {
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}

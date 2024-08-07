@@ -128,8 +128,10 @@ function PokemonDetail({ pokemon, onClose }) {
   const [evolutionSprites, setEvolutionSprites] = useState([]);
   const [evolutionMethods, setEvolutionMethods] = useState([]);
   const [typeEffectivenessData, setTypeEffectivenessData] = useState({
+    quadWeaknesses: [],
     weaknesses: [],
     resistances: [],
+    quadResistances: [],
     immunities: [],
   });
 
@@ -204,31 +206,39 @@ function PokemonDetail({ pokemon, onClose }) {
 
   useEffect(() => {
     function calculateTypeEffectiveness() {
-      const weaknesses = new Set();
-      const resistances = new Set();
-      const immunities = new Set();
+      const effectiveness = {
+        quadWeaknesses: [],
+        weaknesses: [],
+        resistances: [],
+        quadResistances: [],
+        immunities: [],
+      };
+      const effectivenessCount = {};
 
       pokemon.types.forEach((typeObj) => {
         const type = typeObj.type.name;
-        const effectiveness = typeEffectiveness[type];
+        const typeEffects = typeEffectiveness[type];
 
-        effectiveness.weaknesses.forEach((w) => weaknesses.add(w));
-        effectiveness.resistances.forEach((r) => resistances.add(r));
-        effectiveness.immunities.forEach((i) => immunities.add(i));
+        typeEffects.weaknesses.forEach((w) => {
+          effectivenessCount[w] = (effectivenessCount[w] || 0) + 1;
+        });
+        typeEffects.resistances.forEach((r) => {
+          effectivenessCount[r] = (effectivenessCount[r] || 0) - 1;
+        });
+        typeEffects.immunities.forEach((i) => {
+          effectivenessCount[i] = -2;
+        });
       });
 
-      // Remove duplicates and conflicting types
-      resistances.forEach((r) => weaknesses.delete(r));
-      immunities.forEach((i) => {
-        weaknesses.delete(i);
-        resistances.delete(i);
+      Object.entries(effectivenessCount).forEach(([type, count]) => {
+        if (count === 2) effectiveness.quadWeaknesses.push(type);
+        else if (count === 1) effectiveness.weaknesses.push(type);
+        else if (count === -1) effectiveness.resistances.push(type);
+        else if (count === -2) effectiveness.quadResistances.push(type);
+        else if (count <= -3) effectiveness.immunities.push(type);
       });
 
-      setTypeEffectivenessData({
-        weaknesses: Array.from(weaknesses),
-        resistances: Array.from(resistances),
-        immunities: Array.from(immunities),
-      });
+      setTypeEffectivenessData(effectiveness);
     }
 
     calculateTypeEffectiveness();
@@ -280,6 +290,18 @@ function PokemonDetail({ pokemon, onClose }) {
         </div>
         <div className="pokemon-type-effectiveness">
           <h3>Type Effectiveness:</h3>
+          {typeEffectivenessData.quadWeaknesses.length > 0 && (
+            <div className="effectiveness-group">
+              <h4>Very weak against (4x damage):</h4>
+              <ul>
+                {typeEffectivenessData.quadWeaknesses.map((type, index) => (
+                  <li key={index} style={{ backgroundColor: typeColors[type] }}>
+                    {capitalize(type)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className="effectiveness-group">
             <h4>Weak against (2x damage):</h4>
             <ul>
@@ -300,6 +322,18 @@ function PokemonDetail({ pokemon, onClose }) {
               ))}
             </ul>
           </div>
+          {typeEffectivenessData.quadResistances.length > 0 && (
+            <div className="effectiveness-group">
+              <h4>Very resistant to (0.25x damage):</h4>
+              <ul>
+                {typeEffectivenessData.quadResistances.map((type, index) => (
+                  <li key={index} style={{ backgroundColor: typeColors[type] }}>
+                    {capitalize(type)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className="effectiveness-group">
             <h4>Immune to (0x damage):</h4>
             <ul>

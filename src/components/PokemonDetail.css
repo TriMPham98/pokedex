@@ -170,29 +170,6 @@ h4 {
 }
 
 /* Type Effectiveness */
-.effectiveness-group {
-  margin-bottom: 15px;
-}
-
-.effectiveness-group ul {
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.effectiveness-group li {
-  padding: 3px 8px;
-  border-radius: 15px;
-  font-size: 0.9em;
-}
-
-.effectiveness-group li[data-effectiveness="quad"] {
-  border: 2px solid rgba(255, 255, 255, 0.7);
-}
-
-/* Type Effectiveness Table */
 .type-effectiveness-table {
   width: 100%;
   border-collapse: collapse;
@@ -219,6 +196,29 @@ h4 {
   font-size: 0.9em;
 }
 
+/* Abilities Table */
+.abilities-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.abilities-table th,
+.abilities-table td {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px;
+  text-align: left;
+}
+
+.abilities-table th {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.abilities-table td:first-child {
+  font-weight: bold;
+  width: 30%;
+}
+
 /* Media query for responsiveness */
 @media (max-width: 600px) {
   .pokemon-detail-content {
@@ -236,12 +236,18 @@ h4 {
   }
 
   .type-effectiveness-table th,
-  .type-effectiveness-table td {
+  .type-effectiveness-table td,
+  .abilities-table th,
+  .abilities-table td {
     padding: 6px;
   }
 
   .type-pill {
     padding: 1px 6px;
     font-size: 0.8em;
+  }
+
+  .abilities-table td:first-child {
+    width: 40%;
   }
 }

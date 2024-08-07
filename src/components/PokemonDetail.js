@@ -15,6 +15,7 @@ function PokemonDetail({ pokemon, onClose }) {
     quadResistances: [],
     immunities: [],
   });
+  const [abilityDescriptions, setAbilityDescriptions] = useState({});
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -130,6 +131,30 @@ function PokemonDetail({ pokemon, onClose }) {
     calculateTypeEffectiveness();
   }, [pokemon]);
 
+  useEffect(() => {
+    async function fetchAbilityDescriptions() {
+      const descriptions = {};
+      for (const ability of pokemon.abilities) {
+        try {
+          const response = await fetch(ability.ability.url);
+          const data = await response.json();
+          const englishEntry = data.effect_entries.find(
+            (entry) => entry.language.name === "en"
+          );
+          descriptions[ability.ability.name] = englishEntry
+            ? englishEntry.effect
+            : "No description available.";
+        } catch (error) {
+          console.error(`Error fetching ability description:`, error);
+          descriptions[ability.ability.name] = "Failed to load description.";
+        }
+      }
+      setAbilityDescriptions(descriptions);
+    }
+
+    fetchAbilityDescriptions();
+  }, [pokemon]);
+
   if (!pokemon) return null;
 
   const mainType = pokemon.types[0].type.name;
@@ -217,11 +242,22 @@ function PokemonDetail({ pokemon, onClose }) {
         </div>
         <div className="pokemon-abilities">
           <h3>Abilities:</h3>
-          <ul>
-            {pokemon.abilities.map((ability, index) => (
-              <li key={index}>{capitalize(ability.ability.name)}</li>
-            ))}
-          </ul>
+          <table className="abilities-table">
+            <thead>
+              <tr>
+                <th>Ability</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pokemon.abilities.map((ability, index) => (
+                <tr key={index}>
+                  <td>{capitalize(ability.ability.name)}</td>
+                  <td>{abilityDescriptions[ability.ability.name]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <div className="pokemon-stats">
           <h3>Stats:</h3>

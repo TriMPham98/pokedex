@@ -1,5 +1,6 @@
 /* PokemonDetail.css */
 
+/* Layout */
 .pokemon-detail-overlay {
   position: fixed;
   top: 0;
@@ -36,6 +37,7 @@
   color: #ffffff;
 }
 
+/* Pokemon Image */
 .pokemon-detail-image {
   width: 200px;
   height: 200px;
@@ -43,6 +45,7 @@
   margin: 0 auto;
 }
 
+/* Section Styling */
 .pokemon-info,
 .pokemon-types,
 .pokemon-abilities,
@@ -52,6 +55,15 @@
   margin-top: 20px;
 }
 
+/* Typography */
+h2,
+h3,
+h4 {
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Types and Abilities */
 .pokemon-types ul,
 .pokemon-abilities ul {
   list-style-type: none;
@@ -69,6 +81,7 @@
   font-weight: bold;
 }
 
+/* Stats */
 .stat-bar-container {
   display: flex;
   align-items: center;
@@ -105,13 +118,7 @@
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-h2,
-h3,
-h4 {
-  color: #ffffff;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
+/* Evolution Chain */
 .evolution-chain {
   display: flex;
   justify-content: center;
@@ -162,6 +169,7 @@ h4 {
   margin: 0 5px;
 }
 
+/* Type Effectiveness */
 .effectiveness-group {
   margin-bottom: 15px;
 }
@@ -184,6 +192,33 @@ h4 {
   border: 2px solid rgba(255, 255, 255, 0.7);
 }
 
+/* Type Effectiveness Table */
+.type-effectiveness-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.type-effectiveness-table th,
+.type-effectiveness-table td {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px;
+  text-align: left;
+}
+
+.type-effectiveness-table th {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.type-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 2px;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.9em;
+}
+
 /* Media query for responsiveness */
 @media (max-width: 600px) {
   .pokemon-detail-content {
@@ -198,5 +233,15 @@ h4 {
 
   .stat-name {
     width: 100px;
+  }
+
+  .type-effectiveness-table th,
+  .type-effectiveness-table td {
+    padding: 6px;
+  }
+
+  .type-pill {
+    padding: 1px 6px;
+    font-size: 0.8em;
   }
 }

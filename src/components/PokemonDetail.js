@@ -142,6 +142,14 @@ function PokemonDetail({ pokemon, onClose }) {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
+  const typeEffectivenessTable = [
+    { title: "Very weak against (4x damage)", key: "quadWeaknesses" },
+    { title: "Weak against (2x damage)", key: "weaknesses" },
+    { title: "Resistant to (0.5x damage)", key: "resistances" },
+    { title: "Very resistant to (0.25x damage)", key: "quadResistances" },
+    { title: "Immune to (0x damage)", key: "immunities" },
+  ];
+
   return (
     <div className="pokemon-detail-overlay">
       <div
@@ -177,60 +185,35 @@ function PokemonDetail({ pokemon, onClose }) {
         </div>
         <div className="pokemon-type-effectiveness">
           <h3>Type Effectiveness:</h3>
-          {typeEffectivenessData.quadWeaknesses.length > 0 && (
-            <div className="effectiveness-group">
-              <h4>Very weak against (4x damage):</h4>
-              <ul>
-                {typeEffectivenessData.quadWeaknesses.map((type, index) => (
-                  <li key={index} style={{ backgroundColor: typeColors[type] }}>
-                    {capitalize(type)}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <div className="effectiveness-group">
-            <h4>Weak against (2x damage):</h4>
-            <ul>
-              {typeEffectivenessData.weaknesses.map((type, index) => (
-                <li key={index} style={{ backgroundColor: typeColors[type] }}>
-                  {capitalize(type)}
-                </li>
+          <table className="type-effectiveness-table">
+            <thead>
+              <tr>
+                <th>Effectiveness</th>
+                <th>Types</th>
+              </tr>
+            </thead>
+            <tbody>
+              {typeEffectivenessTable.map(({ title, key }) => (
+                <tr key={key}>
+                  <td>{title}</td>
+                  <td>
+                    {typeEffectivenessData[key].length > 0 ? (
+                      typeEffectivenessData[key].map((type, index) => (
+                        <span
+                          key={index}
+                          className="type-pill"
+                          style={{ backgroundColor: typeColors[type] }}>
+                          {capitalize(type)}
+                        </span>
+                      ))
+                    ) : (
+                      <em>None</em>
+                    )}
+                  </td>
+                </tr>
               ))}
-            </ul>
-          </div>
-          <div className="effectiveness-group">
-            <h4>Resistant to (0.5x damage):</h4>
-            <ul>
-              {typeEffectivenessData.resistances.map((type, index) => (
-                <li key={index} style={{ backgroundColor: typeColors[type] }}>
-                  {capitalize(type)}
-                </li>
-              ))}
-            </ul>
-          </div>
-          {typeEffectivenessData.quadResistances.length > 0 && (
-            <div className="effectiveness-group">
-              <h4>Very resistant to (0.25x damage):</h4>
-              <ul>
-                {typeEffectivenessData.quadResistances.map((type, index) => (
-                  <li key={index} style={{ backgroundColor: typeColors[type] }}>
-                    {capitalize(type)}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <div className="effectiveness-group">
-            <h4>Immune to (0x damage):</h4>
-            <ul>
-              {typeEffectivenessData.immunities.map((type, index) => (
-                <li key={index} style={{ backgroundColor: typeColors[type] }}>
-                  {capitalize(type)}
-                </li>
-              ))}
-            </ul>
-          </div>
+            </tbody>
+          </table>
         </div>
         <div className="pokemon-abilities">
           <h3>Abilities:</h3>

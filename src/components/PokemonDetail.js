@@ -184,7 +184,19 @@ function PokemonDetail({ pokemon, onClose }) {
         <button className="close-button" onClick={onClose}>
           &times;
         </button>
-        <h2 style={{ color: "#FFFFFF" }}>{pokemon.name.toUpperCase()}</h2>
+        <div className="pokemon-header">
+          <h2 style={{ color: "#FFFFFF" }}>{pokemon.name.toUpperCase()}</h2>
+          <div className="pokemon-types">
+            {pokemon.types.map((type, index) => (
+              <span
+                key={index}
+                className="type-pill"
+                style={{ backgroundColor: typeColors[type.type.name] }}>
+                {capitalize(type.type.name)}
+              </span>
+            ))}
+          </div>
+        </div>
         <img
           src={pokemon.sprites.other["official-artwork"].front_default}
           alt={pokemon.name}
@@ -195,18 +207,6 @@ function PokemonDetail({ pokemon, onClose }) {
             Height: {pokemon.height / 10} m | Weight: {pokemon.weight / 10} kg |
             Base Exp: {pokemon.base_experience}
           </p>
-        </div>
-        <div className="pokemon-types">
-          <h3>Types:</h3>
-          <ul>
-            {pokemon.types.map((type, index) => (
-              <li
-                key={index}
-                style={{ backgroundColor: typeColors[type.type.name] }}>
-                {capitalize(type.type.name)}
-              </li>
-            ))}
-          </ul>
         </div>
         <div className="pokemon-stats">
           <h3>Stats:</h3>

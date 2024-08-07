@@ -37,6 +37,18 @@
   color: #ffffff;
 }
 
+/* Pokemon Header */
+.pokemon-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pokemon-header h2 {
+  margin-bottom: 10px;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 /* Pokemon Image */
 .pokemon-detail-image {
   width: 200px;
@@ -63,18 +75,16 @@ h4 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Types and Abilities */
-.pokemon-types ul,
-.pokemon-abilities ul {
-  list-style-type: none;
-  padding: 0;
+/* Types and Type Pills */
+.pokemon-types {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
+  margin-top: 10px;
 }
 
-.pokemon-types li,
-.effectiveness-group li {
+.type-pill {
+  display: inline-block;
   padding: 5px 10px;
   border-radius: 20px;
   color: white;
@@ -187,15 +197,6 @@ h4 {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.type-pill {
-  display: inline-block;
-  padding: 2px 8px;
-  margin: 2px;
-  border-radius: 12px;
-  color: white;
-  font-size: 0.9em;
-}
-
 /* Abilities Table */
 .abilities-table {
   width: 100%;
@@ -243,8 +244,8 @@ h4 {
   }
 
   .type-pill {
-    padding: 1px 6px;
-    font-size: 0.8em;
+    padding: 3px 8px;
+    font-size: 0.9em;
   }
 
   .abilities-table td:first-child {

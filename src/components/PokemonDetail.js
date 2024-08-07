@@ -166,6 +166,7 @@ function PokemonDetail({ pokemon, onClose }) {
           const speciesData = await response.json();
           const cryUrl = `https://play.pokemonshowdown.com/audio/cries/${speciesData.name.toLowerCase()}.mp3`;
           const audioElement = new Audio(cryUrl);
+          audioElement.volume = 0.5;
           setAudio(audioElement);
           audioElement
             .play()

@@ -16,6 +16,7 @@ function PokemonDetail({ pokemon, onClose }) {
     immunities: [],
   });
   const [abilityDescriptions, setAbilityDescriptions] = useState({});
+  const [audio, setAudio] = useState(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -153,6 +154,36 @@ function PokemonDetail({ pokemon, onClose }) {
     }
 
     fetchAbilityDescriptions();
+  }, [pokemon]);
+
+  useEffect(() => {
+    async function playPokemonCry() {
+      if (pokemon) {
+        try {
+          const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`
+          );
+          const speciesData = await response.json();
+          const cryUrl = `https://play.pokemonshowdown.com/audio/cries/${speciesData.name.toLowerCase()}.mp3`;
+          const audioElement = new Audio(cryUrl);
+          setAudio(audioElement);
+          audioElement
+            .play()
+            .catch((error) => console.error("Error playing sound:", error));
+        } catch (error) {
+          console.error("Error fetching Pokémon cry:", error);
+        }
+      }
+    }
+
+    playPokemonCry();
+
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
   }, [pokemon]);
 
   if (!pokemon) return null;

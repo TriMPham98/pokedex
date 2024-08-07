@@ -22,11 +22,116 @@ const typeColors = {
   fairy: "#D685AD",
 };
 
+const typeEffectiveness = {
+  normal: { weaknesses: ["fighting"], resistances: [], immunities: ["ghost"] },
+  fire: {
+    weaknesses: ["water", "ground", "rock"],
+    resistances: ["fire", "grass", "ice", "bug", "steel", "fairy"],
+    immunities: [],
+  },
+  water: {
+    weaknesses: ["electric", "grass"],
+    resistances: ["fire", "water", "ice", "steel"],
+    immunities: [],
+  },
+  electric: {
+    weaknesses: ["ground"],
+    resistances: ["electric", "flying", "steel"],
+    immunities: [],
+  },
+  grass: {
+    weaknesses: ["fire", "ice", "poison", "flying", "bug"],
+    resistances: ["water", "electric", "grass", "ground"],
+    immunities: [],
+  },
+  ice: {
+    weaknesses: ["fire", "fighting", "rock", "steel"],
+    resistances: ["ice"],
+    immunities: [],
+  },
+  fighting: {
+    weaknesses: ["flying", "psychic", "fairy"],
+    resistances: ["bug", "rock", "dark"],
+    immunities: [],
+  },
+  poison: {
+    weaknesses: ["ground", "psychic"],
+    resistances: ["grass", "fighting", "poison", "bug", "fairy"],
+    immunities: [],
+  },
+  ground: {
+    weaknesses: ["water", "grass", "ice"],
+    resistances: ["poison", "rock"],
+    immunities: ["electric"],
+  },
+  flying: {
+    weaknesses: ["electric", "ice", "rock"],
+    resistances: ["grass", "fighting", "bug"],
+    immunities: ["ground"],
+  },
+  psychic: {
+    weaknesses: ["bug", "ghost", "dark"],
+    resistances: ["fighting", "psychic"],
+    immunities: [],
+  },
+  bug: {
+    weaknesses: ["fire", "flying", "rock"],
+    resistances: ["grass", "fighting", "ground"],
+    immunities: [],
+  },
+  rock: {
+    weaknesses: ["water", "grass", "fighting", "ground", "steel"],
+    resistances: ["normal", "fire", "poison", "flying"],
+    immunities: [],
+  },
+  ghost: {
+    weaknesses: ["ghost", "dark"],
+    resistances: ["poison", "bug"],
+    immunities: ["normal", "fighting"],
+  },
+  dragon: {
+    weaknesses: ["ice", "dragon", "fairy"],
+    resistances: ["fire", "water", "electric", "grass"],
+    immunities: [],
+  },
+  dark: {
+    weaknesses: ["fighting", "bug", "fairy"],
+    resistances: ["ghost", "dark"],
+    immunities: ["psychic"],
+  },
+  steel: {
+    weaknesses: ["fire", "fighting", "ground"],
+    resistances: [
+      "normal",
+      "grass",
+      "ice",
+      "flying",
+      "psychic",
+      "bug",
+      "rock",
+      "dragon",
+      "steel",
+      "fairy",
+    ],
+    immunities: ["poison"],
+  },
+  fairy: {
+    weaknesses: ["poison", "steel"],
+    resistances: ["fighting", "bug", "dark"],
+    immunities: ["dragon"],
+  },
+};
+
 function PokemonDetail({ pokemon, onClose }) {
   const detailRef = useRef(null);
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [evolutionSprites, setEvolutionSprites] = useState([]);
   const [evolutionMethods, setEvolutionMethods] = useState([]);
+  const [typeEffectivenessData, setTypeEffectivenessData] = useState({
+    weaknesses: [],
+    resistances: [],
+    immunities: [],
+  });
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -97,6 +202,38 @@ function PokemonDetail({ pokemon, onClose }) {
     fetchEvolutionChain();
   }, [pokemon]);
 
+  useEffect(() => {
+    function calculateTypeEffectiveness() {
+      const weaknesses = new Set();
+      const resistances = new Set();
+      const immunities = new Set();
+
+      pokemon.types.forEach((typeObj) => {
+        const type = typeObj.type.name;
+        const effectiveness = typeEffectiveness[type];
+
+        effectiveness.weaknesses.forEach((w) => weaknesses.add(w));
+        effectiveness.resistances.forEach((r) => resistances.add(r));
+        effectiveness.immunities.forEach((i) => immunities.add(i));
+      });
+
+      // Remove duplicates and conflicting types
+      resistances.forEach((r) => weaknesses.delete(r));
+      immunities.forEach((i) => {
+        weaknesses.delete(i);
+        resistances.delete(i);
+      });
+
+      setTypeEffectivenessData({
+        weaknesses: Array.from(weaknesses),
+        resistances: Array.from(resistances),
+        immunities: Array.from(immunities),
+      });
+    }
+
+    calculateTypeEffectiveness();
+  }, [pokemon]);
+
   if (!pokemon) return null;
 
   const mainType = pokemon.types[0].type.name;
@@ -140,6 +277,39 @@ function PokemonDetail({ pokemon, onClose }) {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="pokemon-type-effectiveness">
+          <h3>Type Effectiveness:</h3>
+          <div className="effectiveness-group">
+            <h4>Weak against (2x damage):</h4>
+            <ul>
+              {typeEffectivenessData.weaknesses.map((type, index) => (
+                <li key={index} style={{ backgroundColor: typeColors[type] }}>
+                  {capitalize(type)}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="effectiveness-group">
+            <h4>Resistant to (0.5x damage):</h4>
+            <ul>
+              {typeEffectivenessData.resistances.map((type, index) => (
+                <li key={index} style={{ backgroundColor: typeColors[type] }}>
+                  {capitalize(type)}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="effectiveness-group">
+            <h4>Immune to (0x damage):</h4>
+            <ul>
+              {typeEffectivenessData.immunities.map((type, index) => (
+                <li key={index} style={{ backgroundColor: typeColors[type] }}>
+                  {capitalize(type)}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div className="pokemon-abilities">
           <h3>Abilities:</h3>

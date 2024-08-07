@@ -208,6 +208,24 @@ function PokemonDetail({ pokemon, onClose }) {
             ))}
           </ul>
         </div>
+        <div className="pokemon-stats">
+          <h3>Stats:</h3>
+          {pokemon.stats.map((stat, index) => (
+            <div key={index} className="stat-bar-container">
+              <span className="stat-name">{capitalize(stat.stat.name)}</span>
+              <div className="stat-bar">
+                <div
+                  className="stat-fill"
+                  style={{
+                    width: `${(stat.base_stat / 255) * 100}%`,
+                    backgroundColor: statColor,
+                  }}>
+                  <span className="stat-value">{stat.base_stat}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="pokemon-type-effectiveness">
           <h3>Type Effectiveness:</h3>
           <table className="type-effectiveness-table">
@@ -258,24 +276,6 @@ function PokemonDetail({ pokemon, onClose }) {
               ))}
             </tbody>
           </table>
-        </div>
-        <div className="pokemon-stats">
-          <h3>Stats:</h3>
-          {pokemon.stats.map((stat, index) => (
-            <div key={index} className="stat-bar-container">
-              <span className="stat-name">{capitalize(stat.stat.name)}</span>
-              <div className="stat-bar">
-                <div
-                  className="stat-fill"
-                  style={{
-                    width: `${(stat.base_stat / 255) * 100}%`,
-                    backgroundColor: statColor,
-                  }}>
-                  <span className="stat-value">{stat.base_stat}</span>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
         <div className="pokemon-evolution">
           <h3>Evolution Chain:</h3>

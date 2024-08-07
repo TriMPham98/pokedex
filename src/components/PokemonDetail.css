@@ -1,3 +1,5 @@
+/* PokemonDetail.css */
+
 .pokemon-detail-overlay {
   position: fixed;
   top: 0;
@@ -14,8 +16,8 @@
 .pokemon-detail-content {
   padding: 20px;
   border-radius: 10px;
-  max-width: 700px; /* Increased from 500px */
-  width: 95%; /* Increased from 90% */
+  max-width: 700px;
+  width: 95%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -45,7 +47,8 @@
 .pokemon-types,
 .pokemon-abilities,
 .pokemon-stats,
-.pokemon-evolution {
+.pokemon-evolution,
+.pokemon-type-effectiveness {
   margin-top: 20px;
 }
 
@@ -58,7 +61,8 @@
   gap: 10px;
 }
 
-.pokemon-types li {
+.pokemon-types li,
+.effectiveness-group li {
   padding: 5px 10px;
   border-radius: 20px;
   color: white;
@@ -72,7 +76,7 @@
 }
 
 .stat-name {
-  width: 120px; /* Increased from 100px for better alignment */
+  width: 120px;
   text-align: right;
   margin-right: 10px;
   font-weight: bold;
@@ -102,7 +106,8 @@
 }
 
 h2,
-h3 {
+h3,
+h4 {
   color: #ffffff;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
@@ -157,18 +162,8 @@ h3 {
   margin: 0 5px;
 }
 
-.pokemon-type-effectiveness {
-  margin-top: 20px;
-}
-
 .effectiveness-group {
   margin-bottom: 15px;
-}
-
-.effectiveness-group h4 {
-  margin-bottom: 5px;
-  color: #ffffff;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .effectiveness-group ul {
@@ -182,11 +177,26 @@ h3 {
 .effectiveness-group li {
   padding: 3px 8px;
   border-radius: 15px;
-  color: white;
   font-size: 0.9em;
-  font-weight: bold;
 }
 
 .effectiveness-group li[data-effectiveness="quad"] {
   border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+/* Media query for responsiveness */
+@media (max-width: 600px) {
+  .pokemon-detail-content {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .pokemon-detail-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .stat-name {
+    width: 100px;
+  }
 }

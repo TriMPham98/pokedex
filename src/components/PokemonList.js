@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./PokemonList.css";
 import PokemonDetail from "./PokemonDetail";
-
-const typeColors = {
-  normal: "#A8A77A",
-  fire: "#EE8130",
-  water: "#6390F0",
-  electric: "#F7D02C",
-  grass: "#7AC74C",
-  ice: "#96D9D6",
-  fighting: "#C22E28",
-  poison: "#A33EA1",
-  ground: "#E2BF65",
-  flying: "#A98FF3",
-  psychic: "#F95587",
-  bug: "#A6B91A",
-  rock: "#B6A136",
-  ghost: "#735797",
-  dragon: "#6F35FC",
-  dark: "#705746",
-  steel: "#B7B7CE",
-  fairy: "#D685AD",
-};
+import PokemonGrid from "./PokemonGrid";
+import SearchBar from "./SearchBar";
+import TypeFilter from "./TypeFilter";
 
 function PokemonList() {
   const [pokemon, setPokemon] = useState([]);
@@ -86,19 +68,12 @@ function PokemonList() {
     setSelectedPokemon(null);
   };
 
-  const getAnimatedSpriteUrl = (pokemon) => {
-    return (
-      pokemon.sprites.versions?.["generation-v"]?.["black-white"]?.animated
-        ?.front_default || pokemon.sprites.front_default
-    );
+  const handleSearchChange = (value) => {
+    setSearchTerm(value);
   };
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleTypeChange = (e) => {
-    setSelectedType(e.target.value);
+  const handleTypeChange = (value) => {
+    setSelectedType(value);
   };
 
   if (isLoading) {
@@ -113,53 +88,13 @@ function PokemonList() {
     <div className="pokemon-grid-container">
       <h2 className="pokemon-grid-title">Pokémon Grid</h2>
       <div className="pokemon-filters">
-        <input
-          type="text"
-          placeholder="Search Pokémon"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          className="pokemon-search"
-        />
-        <select
-          value={selectedType}
-          onChange={handleTypeChange}
-          className="pokemon-type-filter">
-          <option value="">All Types</option>
-          {Object.keys(typeColors).map((type) => (
-            <option key={type} value={type}>
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </option>
-          ))}
-        </select>
+        <SearchBar value={searchTerm} onChange={handleSearchChange} />
+        <TypeFilter value={selectedType} onChange={handleTypeChange} />
       </div>
-      <div className="pokemon-grid">
-        {filteredPokemon.map((p) => (
-          <div
-            key={p.id}
-            className="pokemon-grid-item"
-            onClick={() => handlePokemonClick(p)}>
-            <img
-              src={getAnimatedSpriteUrl(p)}
-              alt={p.name}
-              className="pokemon-image"
-            />
-            <span className="pokemon-number">
-              #{p.id.toString().padStart(3, "0")}
-            </span>
-            <span className="pokemon-name">{p.name}</span>
-            <div className="pokemon-types">
-              {p.types.map((type) => (
-                <span
-                  key={type.type.name}
-                  className="pokemon-type"
-                  style={{ backgroundColor: typeColors[type.type.name] }}>
-                  {type.type.name}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+      <PokemonGrid
+        pokemon={filteredPokemon}
+        onPokemonClick={handlePokemonClick}
+      />
       {selectedPokemon && (
         <PokemonDetail pokemon={selectedPokemon} onClose={handleCloseDetail} />
       )}

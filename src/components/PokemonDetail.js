@@ -230,7 +230,7 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick }) {
         </button>
         <div className="custom-scrollbar">
           <div className="pokemon-header">
-            <h2 style={{ color: "#FFFFFF" }}>{pokemon.name.toUpperCase()}</h2>
+            <h2>{pokemon.name.toUpperCase()}</h2>
             <div className="pokemon-types">
               {pokemon.types.map((type, index) => (
                 <span

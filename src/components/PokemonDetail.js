@@ -3,7 +3,7 @@ import { typeColors } from "../utils/typeColors";
 import "./PokemonDetail.css";
 import { typeEffectiveness } from "../utils/typeEffectiveness";
 
-function PokemonDetail({ pokemon, onClose }) {
+function PokemonDetail({ pokemon, onClose, onEvolutionClick }) {
   const detailRef = useRef(null);
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [evolutionSprites, setEvolutionSprites] = useState([]);
@@ -187,6 +187,18 @@ function PokemonDetail({ pokemon, onClose }) {
     };
   }, [pokemon]);
 
+  const handleEvolutionClick = async (pokemonName) => {
+    try {
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+      );
+      const data = await response.json();
+      onEvolutionClick(data);
+    } catch (error) {
+      console.error("Error fetching Pokémon data:", error);
+    }
+  };
+
   if (!pokemon) return null;
 
   const mainType = pokemon.types[0].type.name;
@@ -322,7 +334,8 @@ function PokemonDetail({ pokemon, onClose }) {
                 <div
                   className={`evolution-stage ${
                     stage === pokemon.name ? "current-evolution" : ""
-                  }`}>
+                  }`}
+                  onClick={() => handleEvolutionClick(stage)}>
                   <img
                     src={evolutionSprites[index]}
                     alt={stage}

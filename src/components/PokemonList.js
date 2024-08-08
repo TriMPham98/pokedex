@@ -76,6 +76,22 @@ function PokemonList() {
     setSelectedType(value);
   };
 
+  const handleEvolutionClick = async (newPokemon) => {
+    try {
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${newPokemon.name}`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setSelectedPokemon(data);
+    } catch (error) {
+      console.error("Error fetching evolved Pokémon data:", error);
+      setError(error.message);
+    }
+  };
+
   if (isLoading) {
     return <div className="loading">Loading Pokémon...</div>;
   }
@@ -96,7 +112,11 @@ function PokemonList() {
         onPokemonClick={handlePokemonClick}
       />
       {selectedPokemon && (
-        <PokemonDetail pokemon={selectedPokemon} onClose={handleCloseDetail} />
+        <PokemonDetail
+          pokemon={selectedPokemon}
+          onClose={handleCloseDetail}
+          onEvolutionClick={handleEvolutionClick}
+        />
       )}
     </div>
   );

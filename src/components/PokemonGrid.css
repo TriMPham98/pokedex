@@ -1,7 +1,7 @@
 /* PokemonGrid.css */
 .pokemon-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(6, 1fr); /* Changed to 6 fixed columns */
   gap: 20px;
   padding: 0;
 }
@@ -17,5 +17,3 @@
   align-items: center;
   padding: 15px;
 }
-
-/* Add the rest of the PokemonGrid styles here */

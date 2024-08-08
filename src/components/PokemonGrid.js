@@ -10,6 +10,14 @@ function PokemonGrid({ pokemon, onPokemonClick }) {
     );
   };
 
+  const calculateScaleFactor = (height, weight) => {
+    // Normalize height and weight to a scale of 0 to 1
+    const normalizedHeight = Math.min(Math.max(height / 20, 0), 1);
+    const normalizedWeight = Math.min(Math.max(weight / 1000, 0), 1);
+
+    return 0.69 + (normalizedHeight + normalizedWeight) / 5;
+  };
+
   return (
     <div className="pokemon-grid">
       {pokemon.map((p) => (
@@ -21,6 +29,9 @@ function PokemonGrid({ pokemon, onPokemonClick }) {
             src={getAnimatedSpriteUrl(p)}
             alt={p.name}
             className="pokemon-image"
+            style={{
+              transform: `scale(${calculateScaleFactor(p.height, p.weight)})`,
+            }}
           />
           <span className="pokemon-number">
             #{p.id.toString().padStart(3, "0")}

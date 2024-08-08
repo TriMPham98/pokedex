@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { typeColors } from "../utils/typeColors";
 import "./PokemonDetail.css";
 import { typeEffectiveness } from "../utils/typeEffectiveness";
 
-function PokemonDetail({ pokemon, onClose, onEvolutionClick }) {
+function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const detailRef = useRef(null);
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [evolutionSprites, setEvolutionSprites] = useState([]);
@@ -17,6 +17,32 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick }) {
   });
   const [abilityDescriptions, setAbilityDescriptions] = useState({});
   const [audio, setAudio] = useState(null);
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      switch (event.key) {
+        case "Escape":
+          onClose();
+          break;
+        case "ArrowLeft":
+          onNavigate("prev");
+          break;
+        case "ArrowRight":
+          onNavigate("next");
+          break;
+        default:
+          break;
+      }
+    },
+    [onClose, onNavigate]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   useEffect(() => {
     function handleClickOutside(event) {

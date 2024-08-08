@@ -270,6 +270,32 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick }) {
             </div>
           ))}
         </div>
+        <div className="pokemon-evolution">
+          <h3>Evolution Chain:</h3>
+          <div className="evolution-chain">
+            {evolutionChain.map((stage, index) => (
+              <React.Fragment key={index}>
+                {index > 0 && (
+                  <div className="evolution-method">
+                    {evolutionMethods[index] && `(${evolutionMethods[index]})`}
+                  </div>
+                )}
+                <div
+                  className={`evolution-stage ${
+                    stage === pokemon.name ? "current-evolution" : ""
+                  }`}
+                  onClick={() => handleEvolutionClick(stage)}>
+                  <img
+                    src={evolutionSprites[index]}
+                    alt={stage}
+                    className="evolution-sprite"
+                  />
+                  <span>{capitalize(stage)}</span>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
         <div className="pokemon-type-effectiveness">
           <h3>Type Effectiveness:</h3>
           <table className="type-effectiveness-table">
@@ -320,32 +346,6 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick }) {
               ))}
             </tbody>
           </table>
-        </div>
-        <div className="pokemon-evolution">
-          <h3>Evolution Chain:</h3>
-          <div className="evolution-chain">
-            {evolutionChain.map((stage, index) => (
-              <React.Fragment key={index}>
-                {index > 0 && (
-                  <div className="evolution-method">
-                    {evolutionMethods[index] && `(${evolutionMethods[index]})`}
-                  </div>
-                )}
-                <div
-                  className={`evolution-stage ${
-                    stage === pokemon.name ? "current-evolution" : ""
-                  }`}
-                  onClick={() => handleEvolutionClick(stage)}>
-                  <img
-                    src={evolutionSprites[index]}
-                    alt={stage}
-                    className="evolution-sprite"
-                  />
-                  <span>{capitalize(stage)}</span>
-                </div>
-              </React.Fragment>
-            ))}
-          </div>
         </div>
       </div>
     </div>

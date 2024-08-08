@@ -1,7 +1,7 @@
 /* PokemonGrid.css */
 .pokemon-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* Changed to 6 fixed columns */
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   padding: 0;
 }
@@ -16,4 +16,35 @@
   flex-direction: column;
   align-items: center;
   padding: 15px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1400px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .pokemon-grid {
+    grid-template-columns: 1fr;
+  }
 }

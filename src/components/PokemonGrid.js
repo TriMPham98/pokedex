@@ -15,8 +15,8 @@ function PokemonGrid({ pokemon, onPokemonClick }) {
     const normalizedHeight = Math.min(Math.max(height / 20, 0), 1);
     const normalizedWeight = Math.min(Math.max(weight / 1000, 0), 1);
 
-    // Calculate the base scale factor
-    const baseScale = (normalizedHeight + normalizedWeight) / 2;
+    // Calculate the base scale factor with 60% height and 40% weight
+    const baseScale = (normalizedHeight * 0.7) + (normalizedWeight * 0.3);
 
     // Apply a more dramatic scaling effect
     return 0.25 + baseScale * 1.05;

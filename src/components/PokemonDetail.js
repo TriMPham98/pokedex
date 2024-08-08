@@ -228,124 +228,127 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick }) {
         <button className="close-button" onClick={onClose}>
           &times;
         </button>
-        <div className="pokemon-header">
-          <h2 style={{ color: "#FFFFFF" }}>{pokemon.name.toUpperCase()}</h2>
-          <div className="pokemon-types">
-            {pokemon.types.map((type, index) => (
-              <span
-                key={index}
-                className="type-pill"
-                style={{ backgroundColor: typeColors[type.type.name] }}>
-                {capitalize(type.type.name)}
-              </span>
-            ))}
+        <div className="custom-scrollbar">
+          <div className="pokemon-header">
+            <h2 style={{ color: "#FFFFFF" }}>{pokemon.name.toUpperCase()}</h2>
+            <div className="pokemon-types">
+              {pokemon.types.map((type, index) => (
+                <span
+                  key={index}
+                  className="type-pill"
+                  style={{ backgroundColor: typeColors[type.type.name] }}>
+                  {capitalize(type.type.name)}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-        <img
-          src={pokemon.sprites.other["official-artwork"].front_default}
-          alt={pokemon.name}
-          className="pokemon-detail-image"
-        />
-        <div className="pokemon-info">
-          <p>
-            Height: {pokemon.height / 10} m | Weight: {pokemon.weight / 10} kg |
-            Base Exp: {pokemon.base_experience}
-          </p>
-        </div>
-        <div className="pokemon-stats">
-          <h3>Stats:</h3>
-          {pokemon.stats.map((stat, index) => (
-            <div key={index} className="stat-bar-container">
-              <span className="stat-name">{capitalize(stat.stat.name)}</span>
-              <div className="stat-bar">
-                <div
-                  className="stat-fill"
-                  style={{
-                    width: `${(stat.base_stat / 255) * 100}%`,
-                    backgroundColor: statColor,
-                  }}>
-                  <span className="stat-value">{stat.base_stat}</span>
+          <img
+            src={pokemon.sprites.other["official-artwork"].front_default}
+            alt={pokemon.name}
+            className="pokemon-detail-image"
+          />
+          <div className="pokemon-info">
+            <p>
+              Height: {pokemon.height / 10} m | Weight: {pokemon.weight / 10} kg
+              | Base Exp: {pokemon.base_experience}
+            </p>
+          </div>
+          <div className="pokemon-stats">
+            <h3>Stats:</h3>
+            {pokemon.stats.map((stat, index) => (
+              <div key={index} className="stat-bar-container">
+                <span className="stat-name">{capitalize(stat.stat.name)}</span>
+                <div className="stat-bar">
+                  <div
+                    className="stat-fill"
+                    style={{
+                      width: `${(stat.base_stat / 255) * 100}%`,
+                      backgroundColor: statColor,
+                    }}>
+                    <span className="stat-value">{stat.base_stat}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        <div className="pokemon-evolution">
-          <h3>Evolution Chain:</h3>
-          <div className="evolution-chain">
-            {evolutionChain.map((stage, index) => (
-              <React.Fragment key={index}>
-                {index > 0 && (
-                  <div className="evolution-method">
-                    {evolutionMethods[index] && `(${evolutionMethods[index]})`}
-                  </div>
-                )}
-                <div
-                  className={`evolution-stage ${
-                    stage === pokemon.name ? "current-evolution" : ""
-                  }`}
-                  onClick={() => handleEvolutionClick(stage)}>
-                  <img
-                    src={evolutionSprites[index]}
-                    alt={stage}
-                    className="evolution-sprite"
-                  />
-                  <span>{capitalize(stage)}</span>
-                </div>
-              </React.Fragment>
             ))}
           </div>
-        </div>
-        <div className="pokemon-type-effectiveness">
-          <h3>Type Effectiveness:</h3>
-          <table className="type-effectiveness-table">
-            <thead>
-              <tr>
-                <th>Effectiveness</th>
-                <th>Types</th>
-              </tr>
-            </thead>
-            <tbody>
-              {typeEffectivenessTable.map(({ title, key }) => (
-                <tr key={key}>
-                  <td>{title}</td>
-                  <td>
-                    {typeEffectivenessData[key].length > 0 ? (
-                      typeEffectivenessData[key].map((type, index) => (
-                        <span
-                          key={index}
-                          className="type-pill"
-                          style={{ backgroundColor: typeColors[type] }}>
-                          {capitalize(type)}
-                        </span>
-                      ))
-                    ) : (
-                      <em>None</em>
-                    )}
-                  </td>
-                </tr>
+          <div className="pokemon-evolution">
+            <h3>Evolution Chain:</h3>
+            <div className="evolution-chain">
+              {evolutionChain.map((stage, index) => (
+                <React.Fragment key={index}>
+                  {index > 0 && (
+                    <div className="evolution-method">
+                      {evolutionMethods[index] &&
+                        `(${evolutionMethods[index]})`}
+                    </div>
+                  )}
+                  <div
+                    className={`evolution-stage ${
+                      stage === pokemon.name ? "current-evolution" : ""
+                    }`}
+                    onClick={() => handleEvolutionClick(stage)}>
+                    <img
+                      src={evolutionSprites[index]}
+                      alt={stage}
+                      className="evolution-sprite"
+                    />
+                    <span>{capitalize(stage)}</span>
+                  </div>
+                </React.Fragment>
               ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="pokemon-abilities">
-          <h3>Abilities:</h3>
-          <table className="abilities-table">
-            <thead>
-              <tr>
-                <th>Ability</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pokemon.abilities.map((ability, index) => (
-                <tr key={index}>
-                  <td>{capitalize(ability.ability.name)}</td>
-                  <td>{abilityDescriptions[ability.ability.name]}</td>
+            </div>
+          </div>
+          <div className="pokemon-type-effectiveness">
+            <h3>Type Effectiveness:</h3>
+            <table className="type-effectiveness-table">
+              <thead>
+                <tr>
+                  <th>Effectiveness</th>
+                  <th>Types</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {typeEffectivenessTable.map(({ title, key }) => (
+                  <tr key={key}>
+                    <td>{title}</td>
+                    <td>
+                      {typeEffectivenessData[key].length > 0 ? (
+                        typeEffectivenessData[key].map((type, index) => (
+                          <span
+                            key={index}
+                            className="type-pill"
+                            style={{ backgroundColor: typeColors[type] }}>
+                            {capitalize(type)}
+                          </span>
+                        ))
+                      ) : (
+                        <em>None</em>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="pokemon-abilities">
+            <h3>Abilities:</h3>
+            <table className="abilities-table">
+              <thead>
+                <tr>
+                  <th>Ability</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pokemon.abilities.map((ability, index) => (
+                  <tr key={index}>
+                    <td>{capitalize(ability.ability.name)}</td>
+                    <td>{abilityDescriptions[ability.ability.name]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

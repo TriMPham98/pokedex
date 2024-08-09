@@ -4,6 +4,7 @@ import PokemonDetail from "./PokemonDetail";
 import PokemonGrid from "./PokemonGrid";
 import SearchBar from "./SearchBar";
 import TypeFilter from "./TypeFilter";
+import PokeBallSpinner from "./PokeBallSpinner";
 
 function PokemonList() {
   const [pokemon, setPokemon] = useState([]);
@@ -93,7 +94,7 @@ function PokemonList() {
   };
 
   if (isLoading) {
-    return <div className="loading">Loading Pokémon...</div>;
+    return <PokeBallSpinner />;
   }
 
   if (error) {

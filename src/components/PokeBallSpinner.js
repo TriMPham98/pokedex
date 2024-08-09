@@ -4,7 +4,9 @@ const PokeBallSpinner = () => {
   return (
     <div className="pokeball-spinner">
       <div className="pokeball">
-        <div className="pokeball-button"></div>
+        <div className="pokeball-button">
+          <div className="pokeball-button-inner"></div>
+        </div>
       </div>
       <style jsx>{`
         .pokeball-spinner {
@@ -44,13 +46,23 @@ const PokeBallSpinner = () => {
         }
         .pokeball-button {
           position: absolute;
-          top: calc(50% - 6px);
-          left: calc(50% - 6px);
-          width: 12px;
-          height: 12px;
+          top: calc(50% - 8px);
+          left: calc(50% - 8px);
+          width: 16px;
+          height: 16px;
           background-color: #333;
           border-radius: 50%;
           z-index: 10;
+        }
+        .pokeball-button-inner {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 10px;
+          height: 10px;
+          background-color: #fff;
+          border-radius: 50%;
         }
         @keyframes spin {
           0% {

@@ -37,17 +37,17 @@ const PokeBallSpinner = () => {
           position: absolute;
           background-color: #333;
           width: 100%;
-          height: 5.5px;
+          height: 7px;
           top: calc(50% - 3.5px);
           left: 0;
           z-index: 2;
         }
         .pokeball-button {
           position: absolute;
-          top: calc(50% - 5px);
-          left: calc(50% - 5px);
-          width: 10px;
-          height: 10px;
+          top: calc(50% - 6px);
+          left: calc(50% - 6px);
+          width: 12px;
+          height: 12px;
           background-color: #333;
           border-radius: 50%;
           z-index: 10;

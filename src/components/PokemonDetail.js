@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { typeColors } from "../utils/typeColors";
 import "./PokemonDetail.css";
 import { typeEffectiveness } from "../utils/typeEffectiveness";
+import PokeBallSpinner from "./PokeBallSpinner";
 
 function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const detailRef = useRef(null);
@@ -17,6 +18,7 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   });
   const [abilityDescriptions, setAbilityDescriptions] = useState({});
   const [audio, setAudio] = useState(null);
+  const [isEvolutionLoading, setIsEvolutionLoading] = useState(true);
 
   const handleKeyDown = useCallback(
     (event) => {
@@ -58,6 +60,7 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
 
   useEffect(() => {
     async function fetchEvolutionChain() {
+      setIsEvolutionLoading(true);
       try {
         const speciesResponse = await fetch(pokemon.species.url);
         const speciesData = await speciesResponse.json();
@@ -94,7 +97,6 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
         setEvolutionChain(chain);
         setEvolutionMethods(methods);
 
-        // Fetch sprites for each evolution
         const sprites = await Promise.all(
           chain.map(async (name) => {
             const response = await fetch(
@@ -107,6 +109,8 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
         setEvolutionSprites(sprites);
       } catch (error) {
         console.error("Error fetching evolution chain:", error);
+      } finally {
+        setIsEvolutionLoading(false);
       }
     }
 
@@ -124,7 +128,6 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
       };
       const effectivenessCount = {};
 
-      // Initialize effectivenessCount for all types
       Object.keys(typeColors).forEach((type) => {
         effectivenessCount[type] = 0;
       });
@@ -140,7 +143,7 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
           effectivenessCount[r] -= 1;
         });
         typeEffects.immunities.forEach((i) => {
-          effectivenessCount[i] = -99; // Use a very low number to ensure immunity takes precedence
+          effectivenessCount[i] = -99;
         });
       });
 
@@ -299,30 +302,34 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
           </div>
           <div className="pokemon-evolution">
             <h3>Evolution Chain:</h3>
-            <div className="evolution-chain">
-              {evolutionChain.map((stage, index) => (
-                <React.Fragment key={index}>
-                  {index > 0 && (
-                    <div className="evolution-method">
-                      {evolutionMethods[index] &&
-                        `(${evolutionMethods[index]})`}
+            {isEvolutionLoading ? (
+              <PokeBallSpinner />
+            ) : (
+              <div className="evolution-chain">
+                {evolutionChain.map((stage, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && (
+                      <div className="evolution-method">
+                        {evolutionMethods[index] &&
+                          `(${evolutionMethods[index]})`}
+                      </div>
+                    )}
+                    <div
+                      className={`evolution-stage ${
+                        stage === pokemon.name ? "current-evolution" : ""
+                      }`}
+                      onClick={() => handleEvolutionClick(stage)}>
+                      <img
+                        src={evolutionSprites[index]}
+                        alt={stage}
+                        className="evolution-sprite"
+                      />
+                      <span>{capitalize(stage)}</span>
                     </div>
-                  )}
-                  <div
-                    className={`evolution-stage ${
-                      stage === pokemon.name ? "current-evolution" : ""
-                    }`}
-                    onClick={() => handleEvolutionClick(stage)}>
-                    <img
-                      src={evolutionSprites[index]}
-                      alt={stage}
-                      className="evolution-sprite"
-                    />
-                    <span>{capitalize(stage)}</span>
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
           </div>
           <div className="pokemon-type-effectiveness">
             <h3>Type Effectiveness:</h3>

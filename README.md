@@ -4,7 +4,7 @@
 
 This Pokédex React App is a web application that allows users to browse and view details about different Pokémon. It uses the [PokéAPI](https://pokeapi.co/) to fetch Pokémon data and display it in an interactive grid format.
 
-![Pokédex App Screenshot](screenshot.png)
+![Pokédex App Screenshot](https://github.com/user-attachments/assets/565ebd32-661a-45cf-ae65-98b04ba2c624)
 
 ## Features
 

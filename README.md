@@ -33,13 +33,13 @@ This Pokédex React App is a web application that allows users to browse and vie
 1. Clone the repository:
 
    ```
-   git clone https://github.com/yourusername/pokedex-react-app.git
+   git clone https://github.com/yourusername/pokedex.git
    ```
 
 2. Navigate to the project directory:
 
    ```
-   cd pokedex-react-app
+   cd pokedex
    ```
 
 3. Install the dependencies:

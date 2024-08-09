@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { typeColors } from "../utils/typeColors";
 import "./PokemonGrid.css";
-import PokemonDetail from "./PokemonDetail"; // Make sure to import PokemonDetail
+import PokemonDetail from "./PokemonDetail";
 
 function PokemonGrid({ pokemon }) {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
@@ -41,6 +41,18 @@ function PokemonGrid({ pokemon }) {
     setCurrentIndex(newIndex);
   };
 
+  const getPrimaryTypeColor = (types) => {
+    const color = typeColors[types[0].type.name] || "#FFFFFF";
+    return hexToRGBA(color, 0.2);
+  };
+
+  const hexToRGBA = (hex, alpha) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
+
   return (
     <>
       <div className="pokemon-grid">
@@ -48,7 +60,8 @@ function PokemonGrid({ pokemon }) {
           <div
             key={p.id}
             className="pokemon-grid-item"
-            onClick={() => handlePokemonClick(p, index)}>
+            onClick={() => handlePokemonClick(p, index)}
+            style={{ backgroundColor: getPrimaryTypeColor(p.types) }}>
             <img
               src={getAnimatedSpriteUrl(p)}
               alt={p.name}

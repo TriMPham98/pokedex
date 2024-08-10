@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { typeColors } from "../utils/typeColors";
 import "./PokemonDetail.css";
 import { typeEffectiveness } from "../utils/typeEffectiveness";
-import PokeBallSpinner from "./PokeBallSpinner";
+import PokeBallLoading from "./PokeBallLoading";
 
 function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const detailRef = useRef(null);
@@ -303,7 +303,7 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
           <div className="pokemon-evolution">
             <h3>Evolution Chain:</h3>
             {isEvolutionLoading ? (
-              <PokeBallSpinner />
+              <PokeBallLoading />
             ) : (
               <div className="evolution-chain">
                 {evolutionChain.map((stage, index) => (

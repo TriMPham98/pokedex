@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const PokeBallSpinner = () => {
+  const [isWiggling, setIsWiggling] = useState(false);
+
+  useEffect(() => {
+    const initialTimeout = setTimeout(() => {
+      setIsWiggling(true);
+      setTimeout(() => setIsWiggling(false), 1000);
+    }, 500);
+
+    const wiggleInterval = setInterval(() => {
+      setIsWiggling(true);
+      setTimeout(() => setIsWiggling(false), 1000);
+    }, 4000);
+
+    return () => {
+      clearTimeout(initialTimeout);
+      clearInterval(wiggleInterval);
+    };
+  }, []);
+
   return (
-    <div className="pokeball-spinner">
-      <div className="pokeball">
+    <div className="pokeball-container">
+      <div className={`pokeball ${isWiggling ? "wiggle" : ""}`}>
         <div className="pokeball-button">
           <div className="pokeball-button-inner"></div>
         </div>
       </div>
       <style jsx>{`
-        .pokeball-spinner {
+        .pokeball-container {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -23,7 +42,6 @@ const PokeBallSpinner = () => {
           position: relative;
           overflow: hidden;
           border: 3px solid #333;
-          animation: spin 1s linear infinite;
         }
         .pokeball::before {
           content: "";
@@ -64,13 +82,23 @@ const PokeBallSpinner = () => {
           background-color: #fff;
           border-radius: 50%;
         }
-        @keyframes spin {
-          0% {
+        @keyframes wiggle {
+          0%,
+          100% {
             transform: rotate(0deg);
           }
-          100% {
-            transform: rotate(360deg);
+          25% {
+            transform: rotate(-15deg) translateX(-7.5px);
           }
+          50% {
+            transform: rotate(15deg) translateX(7.5px);
+          }
+          75% {
+            transform: rotate(-15deg) translateX(-7.5px);
+          }
+        }
+        .wiggle {
+          animation: wiggle 1s ease-in-out;
         }
       `}</style>
     </div>

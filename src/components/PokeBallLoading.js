@@ -7,12 +7,12 @@ const PokeBallSpinner = () => {
     const initialTimeout = setTimeout(() => {
       setIsWiggling(true);
       setTimeout(() => setIsWiggling(false), 1000);
-    }, 500);
+    }, 100);
 
     const wiggleInterval = setInterval(() => {
       setIsWiggling(true);
       setTimeout(() => setIsWiggling(false), 1000);
-    }, 4000);
+    }, 1500);
 
     return () => {
       clearTimeout(initialTimeout);

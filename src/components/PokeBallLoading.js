@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const PokeBallSpinner = () => {
+const PokeBallLoading = () => {
   const [isWiggling, setIsWiggling] = useState(false);
 
   useEffect(() => {
@@ -105,4 +105,4 @@ const PokeBallSpinner = () => {
   );
 };
 
-export default PokeBallSpinner;
+export default PokeBallLoading;

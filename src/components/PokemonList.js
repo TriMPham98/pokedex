@@ -20,7 +20,7 @@ function PokemonList() {
       try {
         setIsLoading(true);
         const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=493"
+          "https://pokeapi.co/api/v2/pokemon?limit=1025"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

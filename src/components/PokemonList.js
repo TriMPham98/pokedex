@@ -107,7 +107,7 @@ function PokemonList() {
 
   return (
     <div className="pokemon-grid-container">
-      <h2 className="pokemon-grid-title">Pokémon Grid</h2>
+      {/* <h2 className="pokemon-grid-title">Pokémon Grid</h2> */}
       <div className="pokemon-filters">
         <SearchBar value={searchTerm} onChange={handleSearchChange} />
         <TypeFilter value={selectedType} onChange={handleTypeChange} />

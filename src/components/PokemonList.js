@@ -94,7 +94,11 @@ function PokemonList() {
   };
 
   if (isLoading) {
-    return <PokeBallLoading />;
+    return (
+      <div className="loading-container">
+        <PokeBallLoading />
+      </div>
+    );
   }
 
   if (error) {

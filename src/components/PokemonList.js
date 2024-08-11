@@ -5,6 +5,7 @@ import PokemonGrid from "./PokemonGrid";
 import SearchBar from "./SearchBar";
 import TypeFilter from "./TypeFilter";
 import PokeBallLoading from "./PokeBallLoading";
+import HeroSection from "./HeroSection";
 
 function PokemonList() {
   const [pokemon, setPokemon] = useState([]);
@@ -20,7 +21,6 @@ function PokemonList() {
       try {
         setIsLoading(true);
         const response = await fetch(
-          // Gen 1-151 2-251 3-386 4-493 5-649 6-721 7-809 8-905 9-1025
           "https://pokeapi.co/api/v2/pokemon?limit=649"
         );
         if (!response.ok) {
@@ -107,23 +107,25 @@ function PokemonList() {
   }
 
   return (
-    <div className="pokemon-grid-container">
-      {/* <h2 className="pokemon-grid-title">Pokémon Grid</h2> */}
-      <div className="pokemon-filters">
-        <SearchBar value={searchTerm} onChange={handleSearchChange} />
-        <TypeFilter value={selectedType} onChange={handleTypeChange} />
-      </div>
-      <PokemonGrid
-        pokemon={filteredPokemon}
-        onPokemonClick={handlePokemonClick}
-      />
-      {selectedPokemon && (
-        <PokemonDetail
-          pokemon={selectedPokemon}
-          onClose={handleCloseDetail}
-          onEvolutionClick={handleEvolutionClick}
+    <div className="pokemon-list-container">
+      <HeroSection />
+      <div className="pokemon-grid-container">
+        <div className="pokemon-filters">
+          <SearchBar value={searchTerm} onChange={handleSearchChange} />
+          <TypeFilter value={selectedType} onChange={handleTypeChange} />
+        </div>
+        <PokemonGrid
+          pokemon={filteredPokemon}
+          onPokemonClick={handlePokemonClick}
         />
-      )}
+        {selectedPokemon && (
+          <PokemonDetail
+            pokemon={selectedPokemon}
+            onClose={handleCloseDetail}
+            onEvolutionClick={handleEvolutionClick}
+          />
+        )}
+      </div>
     </div>
   );
 }

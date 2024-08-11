@@ -187,21 +187,16 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
 
   useEffect(() => {
     async function playPokemonCry() {
-      if (pokemon) {
+      if (pokemon && pokemon.cries) {
         try {
-          const response = await fetch(
-            `https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`
-          );
-          const speciesData = await response.json();
-          const cryUrl = `https://play.pokemonshowdown.com/audio/cries/${speciesData.name.toLowerCase()}.mp3`;
-          const audioElement = new Audio(cryUrl);
+          const audioElement = new Audio(pokemon.cries.latest);
           audioElement.volume = 0.25;
           setAudio(audioElement);
           audioElement
             .play()
             .catch((error) => console.error("Error playing sound:", error));
         } catch (error) {
-          console.error("Error fetching Pokémon cry:", error);
+          console.error("Error playing Pokémon cry:", error);
         }
       }
     }

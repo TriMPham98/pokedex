@@ -36,6 +36,9 @@
 .hero-content {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-section h1 {
@@ -44,9 +47,26 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.hero-section p {
-  font-size: 2rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+.explore-button {
+  font-size: 1.5rem;
+  padding: 12px 24px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.explore-button:hover {
+  background-color: #f4511e;
+  transform: translateY(-2px);
+}
+
+.explore-button:active {
+  transform: translateY(0);
 }
 
 .flying-pokemon {
@@ -62,8 +82,9 @@
     font-size: 3rem;
   }
 
-  .hero-section p {
-    font-size: 1.5rem;
+  .explore-button {
+    font-size: 1.25rem;
+    padding: 10px 20px;
   }
 
   .flying-pokemon {
@@ -77,8 +98,9 @@
     font-size: 2rem;
   }
 
-  .hero-section p {
+  .explore-button {
     font-size: 1rem;
+    padding: 8px 16px;
   }
 
   .flying-pokemon {

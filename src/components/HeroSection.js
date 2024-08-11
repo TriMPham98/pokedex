@@ -43,6 +43,13 @@ const HeroSection = () => {
     return () => clearInterval(pokemonInterval);
   }, [currentLandscape]);
 
+  const handleScrollToPokedex = () => {
+    const pokedexElement = document.getElementById("pokedex");
+    if (pokedexElement) {
+      pokedexElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="hero-section-wrapper">
       <div
@@ -52,7 +59,9 @@ const HeroSection = () => {
         }}>
         <div className="hero-content">
           <h1>Welcome to the Pokédex</h1>
-          <p>Explore the world of Pokémon</p>
+          <button onClick={handleScrollToPokedex} className="explore-button">
+            Enter
+          </button>
         </div>
         {flyingPokemon.map((pokemon, index) => (
           <img

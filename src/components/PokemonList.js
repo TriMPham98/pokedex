@@ -109,7 +109,7 @@ function PokemonList() {
   return (
     <div className="pokemon-list-container">
       <HeroSection />
-      <div className="pokemon-grid-container">
+      <div id="pokedex" className="pokemon-grid-container">
         <div className="pokemon-filters">
           <SearchBar value={searchTerm} onChange={handleSearchChange} />
           <TypeFilter value={selectedType} onChange={handleTypeChange} />

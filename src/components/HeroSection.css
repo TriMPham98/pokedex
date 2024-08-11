@@ -30,7 +30,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* 50% transparency */
+  background-color: rgba(0, 0, 0, 0.4); /* Slightly less transparent */
 }
 
 .hero-content {
@@ -42,15 +42,17 @@
 }
 
 .hero-section h1 {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+  font-size: 4.5rem;
+  margin-bottom: 5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+  color: #ffffff;
 }
 
 .explore-button {
   font-size: 1.5rem;
   padding: 12px 24px;
-  background-color: #ff5722;
+  background-color: #03dac6;
   color: white;
   border: none;
   border-radius: 30px;
@@ -58,10 +60,11 @@
   transition: background-color 0.3s, transform 0.3s;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
 }
 
 .explore-button:hover {
-  background-color: #f4511e;
+  background-color: #018786;
   transform: translateY(-2px);
 }
 
@@ -79,7 +82,8 @@
 
 @media (max-width: 768px) {
   .hero-section h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .explore-button {
@@ -95,7 +99,8 @@
 
 @media (max-width: 480px) {
   .hero-section h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
   }
 
   .explore-button {

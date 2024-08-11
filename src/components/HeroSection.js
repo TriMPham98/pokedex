@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./HeroSection.css";
 
-const landscapes = [
-  { name: "Viridian Forest", image: "viridian-forest.jpg" },
-  // Add more landscapes as needed
-];
+const landscapes = [{ name: "Viridian Forest", image: "viridian-forest.jpg" }];
 
 const flyingPokemon = [
-  { name: "Pidgey", image: "/images/pidgey.png" },
-  { name: "Butterfree", image: "/images/butterfree.png" },
-  { name: "Charizard", image: "/images/charizard.png" },
-  // Add more flying Pokémon as needed
+  //   { name: "Pidgey", image: "/images/pidgey.png" },
+  //   { name: "Butterfree", image: "/images/butterfree.png" }
 ];
 
 const HeroSection = () => {
@@ -49,23 +44,29 @@ const HeroSection = () => {
   }, [currentLandscape]);
 
   return (
-    <div
-      className="hero-section"
-      style={{ backgroundImage: `url(${landscapes[currentLandscape].image})` }}>
-      <h1>Welcome to the Pokédex</h1>
-      <p>Explore the world of Pokémon</p>
-      {flyingPokemon.map((pokemon, index) => (
-        <img
-          key={pokemon.name}
-          src={pokemon.image}
-          alt={pokemon.name}
-          className="flying-pokemon"
-          style={{
-            top: `${pokemonPositions[index]?.top}%`,
-            left: `${pokemonPositions[index]?.left}%`,
-          }}
-        />
-      ))}
+    <div className="hero-section-wrapper">
+      <div
+        className="hero-section"
+        style={{
+          backgroundImage: `url(${landscapes[currentLandscape].image})`,
+        }}>
+        <div className="hero-content">
+          <h1>Welcome to the Pokédex</h1>
+          <p>Explore the world of Pokémon</p>
+        </div>
+        {flyingPokemon.map((pokemon, index) => (
+          <img
+            key={pokemon.name}
+            src={pokemon.image}
+            alt={pokemon.name}
+            className="flying-pokemon"
+            style={{
+              top: `${pokemonPositions[index]?.top}%`,
+              left: `${pokemonPositions[index]?.left}%`,
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };

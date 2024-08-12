@@ -4,8 +4,8 @@ import "./HeroSection.css";
 const landscapes = [{ name: "Viridian Forest", image: "viridian-forest.jpg" }];
 
 const flyingPokemon = [
-  //   { name: "Pidgey", image: "/images/pidgey.png" },
-  //   { name: "Butterfree", image: "/images/butterfree.png" }
+  // { name: "Pidgey", image: "/images/pidgey.png" },
+  // { name: "Butterfree", image: "/images/butterfree.png" }
 ];
 
 const HeroSection = () => {
@@ -59,6 +59,7 @@ const HeroSection = () => {
         }}>
         <div className="hero-content">
           <h1>Welcome to the Pokédex</h1>
+          <img src="/pokedex.png" alt="Pokédex" className="pokedex-image" />
           <button onClick={handleScrollToPokedex} className="explore-button">
             Enter
           </button>

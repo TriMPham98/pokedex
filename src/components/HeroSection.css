@@ -30,7 +30,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4); /* Slightly less transparent */
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .hero-content {
@@ -43,7 +43,7 @@
 
 .hero-section h1 {
   font-size: 4.5rem;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: bold;
   color: #ffffff;
@@ -61,6 +61,7 @@
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-weight: bold;
+  margin-top: 2rem;
 }
 
 .explore-button:hover {
@@ -70,6 +71,13 @@
 
 .explore-button:active {
   transform: translateY(0);
+}
+
+.pokedex-image {
+  max-width: 300px;
+  width: 80%;
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
 }
 
 .flying-pokemon {
@@ -89,6 +97,11 @@
   .explore-button {
     font-size: 1.25rem;
     padding: 10px 20px;
+    margin-top: 1.5rem;
+  }
+
+  .pokedex-image {
+    max-width: 250px;
   }
 
   .flying-pokemon {
@@ -106,6 +119,11 @@
   .explore-button {
     font-size: 1rem;
     padding: 8px 16px;
+    margin-top: 1rem;
+  }
+
+  .pokedex-image {
+    max-width: 200px;
   }
 
   .flying-pokemon {

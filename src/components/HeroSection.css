@@ -80,14 +80,6 @@
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
 }
 
-.flying-pokemon {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  transition: left 0.05s linear;
-  z-index: 2;
-}
-
 @media (max-width: 768px) {
   .hero-section h1 {
     font-size: 3.5rem;
@@ -102,11 +94,6 @@
 
   .pokedex-image {
     max-width: 250px;
-  }
-
-  .flying-pokemon {
-    width: 60px;
-    height: 60px;
   }
 }
 
@@ -124,10 +111,5 @@
 
   .pokedex-image {
     max-width: 200px;
-  }
-
-  .flying-pokemon {
-    width: 40px;
-    height: 40px;
   }
 }

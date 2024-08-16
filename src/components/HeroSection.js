@@ -69,14 +69,16 @@ const HeroSection = () => {
         }}
       />
       <div className="hero-content">
-        <h1 className="hero-title">National Pokédex</h1>
-        <div className="pokedex-container">
-          <img
-            ref={pokedexRef}
-            src="/pokedex.png"
-            alt="Pokédex"
-            className="pokedex-image"
-          />
+        <div className="hero-center-group">
+          <h1 className="hero-title">National Pokédex</h1>
+          <div className="pokedex-container">
+            <img
+              ref={pokedexRef}
+              src="/pokedex.png"
+              alt="Pokédex"
+              className="pokedex-image"
+            />
+          </div>
           <button onClick={handleScrollToPokedex} className="explore-button">
             Enter
           </button>

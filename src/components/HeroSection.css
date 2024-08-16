@@ -8,8 +8,7 @@
 .hero-section-wrapper {
   position: relative;
   width: 100%;
-  height: 0;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -46,23 +45,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 5%;
+  padding-top: 5vh;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.hero-section h1 {
+.hero-title {
   font-family: "PokemonGB", sans-serif;
   font-size: 5rem;
   margin-bottom: 2.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: bold;
   color: #ffffff;
-  /* letter-spacing: 6px; */
 }
 
 .pokedex-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .explore-button {
@@ -92,41 +94,80 @@
 
 .pokedex-image {
   max-width: 690px;
-  width: 90%;
+  width: 100%;
   height: auto;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
 }
 
-@media (max-width: 768px) {
-  .hero-section h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 4rem;
+  }
+
+  .pokedex-image {
+    max-width: 550px;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+
+  .pokedex-image {
+    max-width: 450px;
   }
 
   .explore-button {
     font-size: 1.25rem;
     padding: 10px 20px;
-    margin-top: 1.5rem;
-  }
-
-  .pokedex-image {
-    max-width: 300px;
   }
 }
 
-@media (max-width: 480px) {
-  .hero-section h1 {
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pokedex-image {
+    max-width: 350px;
+  }
+
+  .explore-button {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content {
+    padding-top: 3vh;
+  }
+
+  .hero-title {
     font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .pokedex-image {
+    max-width: 280px;
   }
 
   .explore-button {
     font-size: 1rem;
     padding: 8px 16px;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 2rem;
   }
 
   .pokedex-image {
-    max-width: 250px;
+    max-width: 240px;
   }
 }

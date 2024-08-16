@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./HeroSection.css";
 
 const landscapes = [{ name: "Viridian Forest", image: "viridian-forest.jpg" }];
 
 const HeroSection = () => {
   const [currentLandscape, setCurrentLandscape] = useState(0);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const landscapeInterval = setInterval(() => {
@@ -18,6 +19,11 @@ const HeroSection = () => {
     const pokedexElement = document.getElementById("pokedex");
     if (pokedexElement) {
       pokedexElement.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Play the sound
+    if (audioRef.current) {
+      audioRef.current.play();
     }
   };
 
@@ -36,6 +42,7 @@ const HeroSection = () => {
           </button>
         </div>
       </div>
+      <audio ref={audioRef} src="/pokemon-plink.mp3" />
     </div>
   );
 };

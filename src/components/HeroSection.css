@@ -1,3 +1,4 @@
+/* HeroSection.css */
 @font-face {
   font-family: "PokemonGB";
   src: url("../../public/pokemonMolters.ttf") format("truetype");
@@ -45,10 +46,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 5vh;
+  justify-content: center;
+  padding: 5vh 0;
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
+  height: 100%;
 }
 
 .hero-title {
@@ -125,9 +128,18 @@
 }
 
 @media (max-width: 768px) {
+  .hero-section {
+    background-position: center top;
+  }
+
+  .hero-content {
+    justify-content: flex-start;
+    padding-top: 5vh;
+  }
+
   .hero-title {
     font-size: 3rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .pokedex-image {
@@ -137,18 +149,22 @@
   .explore-button {
     font-size: 1.1rem;
     padding: 8px 16px;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 }
 
 @media (max-width: 576px) {
+  .hero-section {
+    background-position: center top 10%;
+  }
+
   .hero-content {
     padding-top: 3vh;
   }
 
   .hero-title {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .pokedex-image {
@@ -158,16 +174,28 @@
   .explore-button {
     font-size: 1rem;
     padding: 8px 16px;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 }
 
 @media (max-width: 400px) {
+  .hero-section {
+    background-position: center top 15%;
+  }
+
+  .hero-content {
+    padding-top: 2vh;
+  }
+
   .hero-title {
     font-size: 2rem;
   }
 
   .pokedex-image {
     max-width: 240px;
+  }
+
+  .explore-button {
+    margin-top: 0.75rem;
   }
 }

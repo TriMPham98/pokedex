@@ -1,3 +1,4 @@
+/* HeroSection.css */
 @font-face {
   font-family: "PokemonGB";
   src: url("../../public/pokemonMolters.ttf") format("truetype");
@@ -53,7 +54,7 @@
 .hero-title {
   font-family: "PokemonGB", sans-serif;
   font-size: 5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem; /* Increased margin for more space */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: bold;
   color: #ffffff;
@@ -63,7 +64,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem; /* Increased margin for more space */
 }
 
 .pokedex-image {
@@ -101,20 +102,30 @@
 @media (max-width: 1200px) {
   .hero-title {
     font-size: 4rem;
+    margin-bottom: 3.5rem; /* Adjusted for smaller screens */
   }
 
   .pokedex-image {
     max-width: 450px;
+  }
+
+  .pokedex-container {
+    margin-bottom: 3.5rem; /* Adjusted for smaller screens */
   }
 }
 
 @media (max-width: 992px) {
   .hero-title {
     font-size: 3.5rem;
+    margin-bottom: 3rem; /* Adjusted for smaller screens */
   }
 
   .pokedex-image {
     max-width: 400px;
+  }
+
+  .pokedex-container {
+    margin-bottom: 3rem; /* Adjusted for smaller screens */
   }
 
   .explore-button {
@@ -126,11 +137,15 @@
 @media (max-width: 768px) {
   .hero-title {
     font-size: 3rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem; /* Adjusted for smaller screens */
   }
 
   .pokedex-image {
     max-width: 350px;
+  }
+
+  .pokedex-container {
+    margin-bottom: 2.5rem; /* Adjusted for smaller screens */
   }
 
   .explore-button {
@@ -142,11 +157,15 @@
 @media (max-width: 576px) {
   .hero-title {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem; /* Adjusted for smaller screens */
   }
 
   .pokedex-image {
     max-width: 280px;
+  }
+
+  .pokedex-container {
+    margin-bottom: 2rem; /* Adjusted for smaller screens */
   }
 
   .explore-button {
@@ -158,9 +177,14 @@
 @media (max-width: 400px) {
   .hero-title {
     font-size: 2rem;
+    margin-bottom: 1.5rem; /* Adjusted for smaller screens */
   }
 
   .pokedex-image {
     max-width: 240px;
+  }
+
+  .pokedex-container {
+    margin-bottom: 1.5rem; /* Adjusted for smaller screens */
   }
 }

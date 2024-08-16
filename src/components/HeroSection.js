@@ -35,7 +35,7 @@ const HeroSection = () => {
           backgroundImage: `url(${landscapes[currentLandscape].image})`,
         }}>
         <div className="hero-content">
-          <h1>Welcome to the Pokédex</h1>
+          <h1 className="hero-title">National Pokédex</h1>
           <div className="pokedex-container">
             <img src="/pokedex.png" alt="Pokédex" className="pokedex-image" />
             <button onClick={handleScrollToPokedex} className="explore-button">

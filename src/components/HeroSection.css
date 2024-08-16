@@ -16,7 +16,7 @@
   background-position: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   color: white;
   text-align: center;
@@ -39,14 +39,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 5%;
 }
 
 .hero-section h1 {
-  font-size: 4.5rem;
-  margin-bottom: 2rem;
+  font-size: 4rem;
+  margin-bottom: 2.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: bold;
   color: #ffffff;
+}
+
+.pokedex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .explore-button {
@@ -61,7 +68,7 @@
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-weight: bold;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .explore-button:hover {
@@ -74,16 +81,16 @@
 }
 
 .pokedex-image {
-  max-width: 300px;
-  width: 80%;
+  max-width: 690px;
+  width: 90%;
   height: auto;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
 }
 
 @media (max-width: 768px) {
   .hero-section h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
   }
 
   .explore-button {
@@ -93,14 +100,14 @@
   }
 
   .pokedex-image {
-    max-width: 250px;
+    max-width: 300px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-section h1 {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .explore-button {
@@ -110,6 +117,6 @@
   }
 
   .pokedex-image {
-    max-width: 200px;
+    max-width: 250px;
   }
 }

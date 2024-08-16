@@ -30,14 +30,14 @@ const HeroSection = () => {
       const yPercentage = (clientY / height - 0.5) * 2; // -1 to 1
 
       // Parallax effect for the Pokédex image (moves more)
-      pokedexRef.current.style.transform = `translate(${xPercentage * 20}px, ${
-        yPercentage * 20
+      pokedexRef.current.style.transform = `translate(${xPercentage * 25}px, ${
+        yPercentage * 25
       }px)`;
 
       // Parallax effect for the background (moves less)
       backgroundRef.current.style.transform = `translate(${
-        xPercentage * -10
-      }px, ${yPercentage * -10}px) scale(1.1)`;
+        xPercentage * -15
+      }px, ${yPercentage * -15}px) scale(1.1)`;
     };
 
     window.addEventListener("mousemove", handleMouseMove);

@@ -7,6 +7,7 @@ const HeroSection = () => {
   const [currentLandscape, setCurrentLandscape] = useState(0);
   const audioRef = useRef(null);
   const heroRef = useRef(null);
+  const backgroundRef = useRef(null);
   const pokedexRef = useRef(null);
 
   useEffect(() => {
@@ -19,7 +20,8 @@ const HeroSection = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      if (!heroRef.current || !pokedexRef.current) return;
+      if (!heroRef.current || !pokedexRef.current || !backgroundRef.current)
+        return;
 
       const { clientX, clientY } = e;
       const { width, height } = heroRef.current.getBoundingClientRect();
@@ -27,9 +29,15 @@ const HeroSection = () => {
       const xPercentage = (clientX / width - 0.5) * 2; // -1 to 1
       const yPercentage = (clientY / height - 0.5) * 2; // -1 to 1
 
-      pokedexRef.current.style.transform = `translate(${xPercentage * 15}px, ${
-        yPercentage * 15
+      // Parallax effect for the Pokédex image (moves more)
+      pokedexRef.current.style.transform = `translate(${xPercentage * 25}px, ${
+        yPercentage * 25
       }px)`;
+
+      // Parallax effect for the background (moves less)
+      backgroundRef.current.style.transform = `translate(${
+        xPercentage * -15
+      }px, ${yPercentage * -15}px) scale(1.1)`;
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -52,26 +60,26 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="hero-section-wrapper">
+    <div className="hero-section-wrapper" ref={heroRef}>
       <div
-        ref={heroRef}
-        className="hero-section"
+        ref={backgroundRef}
+        className="hero-background"
         style={{
           backgroundImage: `url(${landscapes[currentLandscape].image})`,
-        }}>
-        <div className="hero-content">
-          <h1 className="hero-title">National Pokédex</h1>
-          <div className="pokedex-container">
-            <img
-              ref={pokedexRef}
-              src="/pokedex.png"
-              alt="Pokédex"
-              className="pokedex-image"
-            />
-            <button onClick={handleScrollToPokedex} className="explore-button">
-              Enter
-            </button>
-          </div>
+        }}
+      />
+      <div className="hero-content">
+        <h1 className="hero-title">National Pokédex</h1>
+        <div className="pokedex-container">
+          <img
+            ref={pokedexRef}
+            src="/pokedex.png"
+            alt="Pokédex"
+            className="pokedex-image"
+          />
+          <button onClick={handleScrollToPokedex} className="explore-button">
+            Enter
+          </button>
         </div>
       </div>
       <audio ref={audioRef} src="/pokemon-plink.mp3" />

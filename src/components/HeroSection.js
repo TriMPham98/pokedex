@@ -6,6 +6,8 @@ const landscapes = [{ name: "Viridian Forest", image: "viridian-forest.jpg" }];
 const HeroSection = () => {
   const [currentLandscape, setCurrentLandscape] = useState(0);
   const audioRef = useRef(null);
+  const heroRef = useRef(null);
+  const pokedexRef = useRef(null);
 
   useEffect(() => {
     const landscapeInterval = setInterval(() => {
@@ -13,6 +15,28 @@ const HeroSection = () => {
     }, 5000);
 
     return () => clearInterval(landscapeInterval);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!heroRef.current || !pokedexRef.current) return;
+
+      const { clientX, clientY } = e;
+      const { width, height } = heroRef.current.getBoundingClientRect();
+
+      const xPercentage = (clientX / width - 0.5) * 2; // -1 to 1
+      const yPercentage = (clientY / height - 0.5) * 2; // -1 to 1
+
+      pokedexRef.current.style.transform = `translate(${xPercentage * 15}px, ${
+        yPercentage * 15
+      }px)`;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   const handleScrollToPokedex = () => {
@@ -30,6 +54,7 @@ const HeroSection = () => {
   return (
     <div className="hero-section-wrapper">
       <div
+        ref={heroRef}
         className="hero-section"
         style={{
           backgroundImage: `url(${landscapes[currentLandscape].image})`,
@@ -37,7 +62,12 @@ const HeroSection = () => {
         <div className="hero-content">
           <h1 className="hero-title">National Pokédex</h1>
           <div className="pokedex-container">
-            <img src="/pokedex.png" alt="Pokédex" className="pokedex-image" />
+            <img
+              ref={pokedexRef}
+              src="/pokedex.png"
+              alt="Pokédex"
+              className="pokedex-image"
+            />
             <button onClick={handleScrollToPokedex} className="explore-button">
               Enter
             </button>

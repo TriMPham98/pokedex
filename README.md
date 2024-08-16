@@ -31,29 +31,21 @@ This Pokédex React App is a web application that allows users to browse and vie
 ### Installation
 
 1. Clone the repository:
-
    ```
    git clone https://github.com/yourusername/pokedex.git
    ```
-
 2. Navigate to the project directory:
-
    ```
    cd pokedex
    ```
-
 3. Install the dependencies:
-
    ```
    npm install
    ```
-
 4. Start the development server:
-
    ```
    npm start
    ```
-
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
 
 ## Usage
@@ -61,6 +53,10 @@ This Pokédex React App is a web application that allows users to browse and vie
 - Scroll through the grid to view different Pokémon
 - Click on a Pokémon card to view more detailed information
 - Close the detailed view by clicking outside the modal or on the close button
+
+## Design Credit
+
+The Pokédex design is inspired by and based on the work of Gustavo da Silva Rodrigues. The original Figma design can be found [here](https://www.figma.com/community/file/1322325075311624960/pokedex).
 
 ## Contributing
 
@@ -72,10 +68,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
 ## Acknowledgments
 
 - [PokéAPI](https://pokeapi.co/) for providing the Pokémon data
 - [Create React App](https://github.com/facebook/create-react-app) for the initial project setup
+- Gustavo da Silva Rodrigues for the Pokédex design inspiration
 
 ## Future Enhancements
 

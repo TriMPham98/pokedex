@@ -19,13 +19,11 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const [abilityDescriptions, setAbilityDescriptions] = useState({});
   const [audio, setAudio] = useState(null);
   const [isEvolutionLoading, setIsEvolutionLoading] = useState(true);
-  const plinkSoundRef = useRef(new Audio("/pokemon-plink.mp3"));
 
   const handleKeyDown = useCallback(
     (event) => {
       switch (event.key) {
         case "Escape":
-          plinkSoundRef.current.play();
           onClose();
           break;
         case "ArrowLeft":
@@ -51,7 +49,6 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   useEffect(() => {
     function handleClickOutside(event) {
       if (detailRef.current && !detailRef.current.contains(event.target)) {
-        plinkSoundRef.current.play();
         onClose();
       }
     }
@@ -226,11 +223,6 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
     }
   };
 
-  const handleCloseClick = () => {
-    plinkSoundRef.current.play();
-    onClose();
-  };
-
   if (!pokemon) return null;
 
   const mainType = pokemon.types[0].type.name;
@@ -257,7 +249,7 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
         className="pokemon-detail-content"
         ref={detailRef}
         style={{ backgroundColor: `${backgroundColor}CC` }}>
-        <button className="close-button" onClick={handleCloseClick}>
+        <button className="close-button" onClick={onClose}>
           &times;
         </button>
         <div className="custom-scrollbar">

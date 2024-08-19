@@ -22,6 +22,14 @@ const Footer = () => {
               <li>
                 <a href="#pokemon-search">Pokémon Search</a>
               </li>
+              <li>
+                <a
+                  href="https://pokeapi.co/"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  PokeAPI
+                </a>
+              </li>
             </ul>
           </div>
           <div className="footer-section">

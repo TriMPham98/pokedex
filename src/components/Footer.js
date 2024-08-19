@@ -20,7 +20,7 @@ const Footer = () => {
                 <a href="#top">Top</a>
               </li>
               <li>
-                <a href="#pokemon-list">Pokémon List</a>
+                <a href="#pokemon-search">Pokémon Search</a>
               </li>
             </ul>
           </div>

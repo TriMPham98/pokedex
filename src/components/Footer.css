@@ -3,6 +3,7 @@
   color: #ffffff;
   padding: 2rem 0;
   text-align: center;
+  border-top: 1px solid #2a2a2a;
 }
 
 .footer-content {
@@ -19,6 +20,7 @@
 
 .footer p {
   margin-bottom: 1rem;
+  color: #b3b3b3;
 }
 
 .footer-section {
@@ -35,19 +37,19 @@
 }
 
 .footer a {
-  color: #bb86fc;
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer a:hover {
-  color: #3700b3;
+  color: #ffffff;
 }
 
 .copyright {
   margin-top: 2rem;
   font-size: 0.9rem;
-  opacity: 0.8;
+  color: #757575;
 }
 
 @media (min-width: 768px) {
@@ -56,4 +58,13 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
+}
+
+/* Add some hover effects to match the interactive feel of the app */
+.footer-section:hover h3 {
+  text-shadow: 0 0 8px rgba(3, 218, 198, 0.8);
+}
+
+.footer a:hover {
+  text-shadow: 0 0 8px rgba(187, 134, 252, 0.8);
 }

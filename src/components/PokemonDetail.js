@@ -3,6 +3,7 @@ import { typeColors } from "../utils/typeColors";
 import "./PokemonDetail.css";
 import { typeEffectiveness } from "../utils/typeEffectiveness";
 import PokeBallLoading from "./PokeBallLoading";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const detailRef = useRef(null);
@@ -245,6 +246,11 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
 
   return (
     <div className="pokemon-detail-overlay">
+      <button
+        className="navigate-button prev"
+        onClick={() => onNavigate("prev")}>
+        <ChevronLeft size={32} />
+      </button>
       <div
         className="pokemon-detail-content"
         ref={detailRef}
@@ -379,6 +385,11 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
           </div>
         </div>
       </div>
+      <button
+        className="navigate-button next"
+        onClick={() => onNavigate("next")}>
+        <ChevronRight size={32} />
+      </button>
     </div>
   );
 }

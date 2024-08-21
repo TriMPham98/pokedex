@@ -99,6 +99,13 @@
   transform: translateY(0);
 }
 
+/* Mobile styles to disable parallax */
+.hero-section-wrapper.mobile .hero-background,
+.hero-section-wrapper.mobile .pokedex-image {
+  transform: none !important;
+  transition: none !important;
+}
+
 @media (max-width: 1200px) {
   .hero-title {
     font-size: 4rem;

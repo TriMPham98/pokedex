@@ -5,10 +5,22 @@ const landscapes = [{ name: "Viridian Forest", image: "viridian-forest.jpg" }];
 
 const HeroSection = () => {
   const [currentLandscape, setCurrentLandscape] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef(null);
   const heroRef = useRef(null);
   const backgroundRef = useRef(null);
   const pokedexRef = useRef(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const landscapeInterval = setInterval(() => {
@@ -19,6 +31,8 @@ const HeroSection = () => {
   }, []);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const handleMouseMove = (e) => {
       if (!heroRef.current || !pokedexRef.current || !backgroundRef.current)
         return;
@@ -45,7 +59,7 @@ const HeroSection = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [isMobile]);
 
   const handleScrollToPokedex = () => {
     const pokedexElement = document.getElementById("pokedex");
@@ -60,7 +74,9 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="hero-section-wrapper" ref={heroRef}>
+    <div
+      className={`hero-section-wrapper ${isMobile ? "mobile" : ""}`}
+      ref={heroRef}>
       <div
         ref={backgroundRef}
         className="hero-background"

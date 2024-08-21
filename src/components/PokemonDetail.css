@@ -297,6 +297,12 @@ h4 {
     flex-wrap: nowrap;
     overflow-x: auto;
     padding: 10px 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  .evolution-chain::-webkit-scrollbar {
+    display: none; /* WebKit */
   }
 
   .evolution-stage {

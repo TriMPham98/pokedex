@@ -289,16 +289,41 @@ h4 {
     width: 40%;
   }
 
+  .evolution-chain {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+
+  .evolution-stage {
+    flex-direction: column;
+    margin: 0 5px;
+    flex-shrink: 0;
+  }
+
   .evolution-sprite {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
   }
 
   .evolution-stage span {
-    font-size: 0.8em;
+    font-size: 0.7em;
+    text-align: center;
   }
 
   .evolution-method {
-    font-size: 0.75em;
+    font-size: 0.7em;
+    margin: 0 5px;
+    white-space: nowrap;
+  }
+
+  .evolution-method::before,
+  .evolution-method::after {
+    width: 15px;
   }
 }

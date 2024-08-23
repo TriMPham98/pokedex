@@ -3,7 +3,6 @@ import { typeColors } from "../utils/typeColors";
 import "./PokemonDetail.css";
 import { typeEffectiveness } from "../utils/typeEffectiveness";
 import PokeBallLoading from "./PokeBallLoading";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const detailRef = useRef(null);
@@ -250,165 +249,145 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
 
   return (
     <div className="pokemon-detail-overlay" onClick={handleOverlayClick}>
-      <div className="navigation-container">
+      <div
+        className="pokemon-detail-content"
+        ref={detailRef}
+        style={{ backgroundColor: `${backgroundColor}CC` }}
+        onClick={(e) => e.stopPropagation()}>
         <button
-          className="navigate-button prev"
+          className="close-button"
           onClick={(e) => {
             e.stopPropagation();
-            handleNavigation("prev");
+            onClose();
           }}>
-          <ChevronLeft size={32} />
+          &times;
         </button>
-        <div
-          className="pokemon-detail-content"
-          ref={detailRef}
-          style={{ backgroundColor: `${backgroundColor}CC` }}
-          onClick={(e) => e.stopPropagation()}>
-          <button
-            className="close-button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose();
-            }}>
-            &times;
-          </button>
-          <div className="custom-scrollbar">
-            <div className="pokemon-header">
-              <h2>{pokemon.name.toUpperCase()}</h2>
-              <div className="pokemon-types">
-                {pokemon.types.map((type, index) => (
-                  <span
-                    key={index}
-                    className="type-pill"
-                    style={{ backgroundColor: typeColors[type.type.name] }}>
-                    {capitalize(type.type.name)}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <img
-              src={pokemon.sprites.other["official-artwork"].front_default}
-              alt={pokemon.name}
-              className="pokemon-detail-image"
-            />
-            <div className="pokemon-info">
-              <p>
-                Height: {pokemon.height / 10} m | Weight: {pokemon.weight / 10}{" "}
-                kg | Base Exp: {pokemon.base_experience}
-              </p>
-            </div>
-            <div className="pokemon-stats">
-              <h3>Stats:</h3>
-              {pokemon.stats.map((stat, index) => (
-                <div key={index} className="stat-bar-container">
-                  <span className="stat-name">
-                    {capitalize(stat.stat.name)}
-                  </span>
-                  <div className="stat-bar">
-                    <div
-                      className="stat-fill"
-                      style={{
-                        width: `${(stat.base_stat / 255) * 100}%`,
-                        backgroundColor: statColor,
-                      }}>
-                      <span className="stat-value">{stat.base_stat}</span>
-                    </div>
-                  </div>
-                </div>
+        <div className="custom-scrollbar">
+          <div className="pokemon-header">
+            <h2>{pokemon.name.toUpperCase()}</h2>
+            <div className="pokemon-types">
+              {pokemon.types.map((type, index) => (
+                <span
+                  key={index}
+                  className="type-pill"
+                  style={{ backgroundColor: typeColors[type.type.name] }}>
+                  {capitalize(type.type.name)}
+                </span>
               ))}
             </div>
-            <div className="pokemon-evolution">
-              <h3>Evolution Chain:</h3>
-              {isEvolutionLoading ? (
-                <PokeBallLoading />
-              ) : (
-                <div className="evolution-chain">
-                  {evolutionChain.map((stage, index) => (
-                    <React.Fragment key={index}>
-                      {index > 0 && (
-                        <div className="evolution-method">
-                          {evolutionMethods[index] &&
-                            `(${evolutionMethods[index]})`}
-                        </div>
-                      )}
-                      <div
-                        className={`evolution-stage ${
-                          stage === pokemon.name ? "current-evolution" : ""
-                        }`}
-                        onClick={() => handleEvolutionClick(stage)}>
-                        <img
-                          src={evolutionSprites[index]}
-                          alt={stage}
-                          className="evolution-sprite"
-                        />
-                        <span>{capitalize(stage)}</span>
-                      </div>
-                    </React.Fragment>
-                  ))}
+          </div>
+          <img
+            src={pokemon.sprites.other["official-artwork"].front_default}
+            alt={pokemon.name}
+            className="pokemon-detail-image"
+          />
+          <div className="pokemon-info">
+            <p>
+              Height: {pokemon.height / 10} m | Weight: {pokemon.weight / 10} kg
+              | Base Exp: {pokemon.base_experience}
+            </p>
+          </div>
+          <div className="pokemon-stats">
+            <h3>Stats:</h3>
+            {pokemon.stats.map((stat, index) => (
+              <div key={index} className="stat-bar-container">
+                <span className="stat-name">{capitalize(stat.stat.name)}</span>
+                <div className="stat-bar">
+                  <div
+                    className="stat-fill"
+                    style={{
+                      width: `${(stat.base_stat / 255) * 100}%`,
+                      backgroundColor: statColor,
+                    }}>
+                    <span className="stat-value">{stat.base_stat}</span>
+                  </div>
                 </div>
-              )}
-            </div>
-            <div className="pokemon-type-effectiveness">
-              <h3>Type Effectiveness:</h3>
-              <table className="type-effectiveness-table">
-                <thead>
-                  <tr>
-                    <th>Effectiveness</th>
-                    <th>Types</th>
+              </div>
+            ))}
+          </div>
+          <div className="pokemon-evolution">
+            <h3>Evolution Chain:</h3>
+            {isEvolutionLoading ? (
+              <PokeBallLoading />
+            ) : (
+              <div className="evolution-chain">
+                {evolutionChain.map((stage, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && (
+                      <div className="evolution-method">
+                        {evolutionMethods[index] &&
+                          `(${evolutionMethods[index]})`}
+                      </div>
+                    )}
+                    <div
+                      className={`evolution-stage ${
+                        stage === pokemon.name ? "current-evolution" : ""
+                      }`}
+                      onClick={() => handleEvolutionClick(stage)}>
+                      <img
+                        src={evolutionSprites[index]}
+                        alt={stage}
+                        className="evolution-sprite"
+                      />
+                      <span>{capitalize(stage)}</span>
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="pokemon-type-effectiveness">
+            <h3>Type Effectiveness:</h3>
+            <table className="type-effectiveness-table">
+              <thead>
+                <tr>
+                  <th>Effectiveness</th>
+                  <th>Types</th>
+                </tr>
+              </thead>
+              <tbody>
+                {typeEffectivenessTable.map(({ title, key }) => (
+                  <tr key={key}>
+                    <td>{title}</td>
+                    <td>
+                      {typeEffectivenessData[key].length > 0 ? (
+                        typeEffectivenessData[key].map((type, index) => (
+                          <span
+                            key={index}
+                            className="type-pill"
+                            style={{ backgroundColor: typeColors[type] }}>
+                            {capitalize(type)}
+                          </span>
+                        ))
+                      ) : (
+                        <em>None</em>
+                      )}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {typeEffectivenessTable.map(({ title, key }) => (
-                    <tr key={key}>
-                      <td>{title}</td>
-                      <td>
-                        {typeEffectivenessData[key].length > 0 ? (
-                          typeEffectivenessData[key].map((type, index) => (
-                            <span
-                              key={index}
-                              className="type-pill"
-                              style={{ backgroundColor: typeColors[type] }}>
-                              {capitalize(type)}
-                            </span>
-                          ))
-                        ) : (
-                          <em>None</em>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="pokemon-abilities">
-              <h3>Abilities:</h3>
-              <table className="abilities-table">
-                <thead>
-                  <tr>
-                    <th>Ability</th>
-                    <th>Description</th>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="pokemon-abilities">
+            <h3>Abilities:</h3>
+            <table className="abilities-table">
+              <thead>
+                <tr>
+                  <th>Ability</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pokemon.abilities.map((ability, index) => (
+                  <tr key={index}>
+                    <td>{capitalize(ability.ability.name)}</td>
+                    <td>{abilityDescriptions[ability.ability.name]}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {pokemon.abilities.map((ability, index) => (
-                    <tr key={index}>
-                      <td>{capitalize(ability.ability.name)}</td>
-                      <td>{abilityDescriptions[ability.ability.name]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
-        <button
-          className="navigate-button next"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleNavigation("next");
-          }}>
-          <ChevronRight size={32} />
-        </button>
       </div>
     </div>
   );

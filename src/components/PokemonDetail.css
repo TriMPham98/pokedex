@@ -140,8 +140,9 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   margin-top: 10px;
+  width: 100%;
 }
 
 .evolution-stage {
@@ -325,44 +326,11 @@ h4 {
   .evolution-chain {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     padding: 5px 0;
-  }
-
-  .evolution-stage {
-    margin: 0 3px;
-  }
-
-  .evolution-sprite {
-    width: 40px;
-    height: 40px;
-  }
-
-  .evolution-stage span {
-    font-size: 0.65em;
-  }
-
-  .evolution-method {
-    font-size: 0.65em;
-    margin: 0 2px;
-  }
-
-  .evolution-method::before,
-  .evolution-method::after {
-    width: 8px;
-  }
-
-  .navigate-button {
-    width: 40px;
-    height: 40px;
-  }
-
-  .navigate-button.prev {
-    left: 10px;
-  }
-
-  .navigate-button.next {
-    right: 10px;
+    width: 100%;
   }
 
   .navigate-button svg {

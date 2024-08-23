@@ -140,7 +140,7 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-top: 10px;
 }
 
@@ -153,17 +153,17 @@ h4 {
 }
 
 .evolution-sprite {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   image-rendering: pixelated;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  padding: 4px;
+  padding: 2px;
 }
 
 .evolution-stage span {
-  font-size: 0.9em;
-  margin-top: 3px;
+  font-size: 0.8em;
+  margin-top: 2px;
 }
 
 .current-evolution {
@@ -172,24 +172,24 @@ h4 {
 
 .current-evolution .evolution-sprite {
   background-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
 }
 
 .evolution-method {
   display: flex;
   align-items: center;
-  font-size: 0.85em;
+  font-size: 0.75em;
   color: rgba(255, 255, 255, 0.8);
-  margin: 0 4px;
+  margin: 0 2px;
 }
 
 .evolution-method::before,
 .evolution-method::after {
   content: "";
-  height: 1.5px;
-  width: 18px;
+  height: 1px;
+  width: 10px;
   background-color: rgba(255, 255, 255, 0.6);
-  margin: 0 4px;
+  margin: 0 2px;
 }
 
 .type-effectiveness-table {
@@ -326,44 +326,30 @@ h4 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 10px 0;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-  }
-
-  .evolution-chain::-webkit-scrollbar {
-    display: none; /* WebKit */
+    padding: 5px 0;
   }
 
   .evolution-stage {
-    flex-direction: column;
-    margin: 0 5px;
-    flex-shrink: 0;
+    margin: 0 3px;
   }
 
   .evolution-sprite {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 5px;
+    width: 40px;
+    height: 40px;
   }
 
   .evolution-stage span {
-    font-size: 0.7em;
-    text-align: center;
+    font-size: 0.65em;
   }
 
   .evolution-method {
-    font-size: 0.7em;
-    margin: 0 5px;
-    white-space: nowrap;
+    font-size: 0.65em;
+    margin: 0 2px;
   }
 
   .evolution-method::before,
   .evolution-method::after {
-    width: 15px;
+    width: 8px;
   }
 
   .navigate-button {

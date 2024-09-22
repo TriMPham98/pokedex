@@ -6,6 +6,8 @@ This Pokédex React App is a web application that allows users to browse and vie
 
 ![Pokédex App Screenshot](https://github.com/user-attachments/assets/045e08c4-8f7e-49ef-9c0f-118fa08441ee)
 
+![Pokédex App Screenshot](https://github.com/user-attachments/assets/000b671d-9183-4081-9230-90883574991d)
+
 ## Features
 
 - Display a grid of Pokémon with their images, names, numbers, and types

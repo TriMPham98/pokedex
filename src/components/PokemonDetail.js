@@ -3,6 +3,7 @@ import { typeColors } from "../utils/typeColors";
 import "./PokemonDetail.css";
 import { typeEffectiveness } from "../utils/typeEffectiveness";
 import PokeBallLoading from "./PokeBallLoading";
+import { fetchWithCache } from "../utils/apiCache";
 
 function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const detailRef = useRef(null);
@@ -19,6 +20,8 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const [abilityDescriptions, setAbilityDescriptions] = useState({});
   const [audio, setAudio] = useState(null);
   const [isEvolutionLoading, setIsEvolutionLoading] = useState(true);
+  const [isAbilitiesLoading, setIsAbilitiesLoading] = useState(true);
+  const [isAudioLoading, setIsAudioLoading] = useState(true);
 
   const handleNavigation = useCallback(
     (direction) => {
@@ -66,12 +69,12 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
     async function fetchEvolutionChain() {
       setIsEvolutionLoading(true);
       try {
-        const speciesResponse = await fetch(pokemon.species.url);
-        const speciesData = await speciesResponse.json();
-        const evolutionChainResponse = await fetch(
+        const speciesResponse = await fetchWithCache(pokemon.species.url);
+        const speciesData = speciesResponse;
+        const evolutionChainResponse = await fetchWithCache(
           speciesData.evolution_chain.url
         );
-        const evolutionChainData = await evolutionChainResponse.json();
+        const evolutionChainData = evolutionChainResponse;
 
         const chain = [];
         const methods = [];
@@ -103,10 +106,10 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
 
         const sprites = await Promise.all(
           chain.map(async (name) => {
-            const response = await fetch(
+            const response = await fetchWithCache(
               `https://pokeapi.co/api/v2/pokemon/${name}`
             );
-            const data = await response.json();
+            const data = response;
             return data.sprites.front_default;
           })
         );
@@ -170,8 +173,8 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
       const descriptions = {};
       for (const ability of pokemon.abilities) {
         try {
-          const response = await fetch(ability.ability.url);
-          const data = await response.json();
+          const response = await fetchWithCache(ability.ability.url);
+          const data = response;
           const englishEntry = data.effect_entries.find(
             (entry) => entry.language.name === "en"
           );
@@ -217,10 +220,10 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
 
   const handleEvolutionClick = async (pokemonName) => {
     try {
-      const response = await fetch(
+      const response = await fetchWithCache(
         `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
       );
-      const data = await response.json();
+      const data = response;
       onEvolutionClick(data);
     } catch (error) {
       console.error("Error fetching Pokémon data:", error);
@@ -242,8 +245,8 @@ function PokemonDetail({ pokemon, onClose, onEvolutionClick, onNavigate }) {
   const typeEffectivenessTable = [
     { title: "Very weak against (4x damage)", key: "quadWeaknesses" },
     { title: "Weak against (2x damage)", key: "weaknesses" },
-    { title: "Resistant to (0.5x damage)", key: "resistances" },
-    { title: "Very resistant to (0.25x damage)", key: "quadResistances" },
+    { title: "Resistant to (½x damage)", key: "resistances" },
+    { title: "Very resistant to (¼x damage)", key: "quadResistances" },
     { title: "Immune to (0x damage)", key: "immunities" },
   ];
 

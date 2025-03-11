@@ -6,41 +6,39 @@ import SearchBar from "./SearchBar";
 import TypeFilter from "./TypeFilter";
 import PokeBallLoading from "./PokeBallLoading";
 import HeroSection from "./HeroSection";
+import { fetchWithCache } from "../utils/apiCache";
 
 function PokemonList() {
   const [pokemon, setPokemon] = useState([]);
   const [filteredPokemon, setFilteredPokemon] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const pokemonPerPage = 50;
 
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=649"
+        const data = await fetchWithCache(
+          `https://pokeapi.co/api/v2/pokemon?limit=${pokemonPerPage}&offset=0`
         );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
 
         const pokemonDetails = await Promise.all(
           data.results.map(async (p) => {
-            const res = await fetch(p.url);
-            if (!res.ok) {
-              throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.json();
+            return await fetchWithCache(p.url);
           })
         );
 
         setPokemon(pokemonDetails);
         setFilteredPokemon(pokemonDetails);
         setIsLoading(false);
+        setHasMore(data.next !== null);
       } catch (e) {
         console.error("Error fetching Pokémon:", e);
         setError(e.message);
@@ -50,6 +48,33 @@ function PokemonList() {
 
     fetchPokemon();
   }, []);
+
+  const loadMorePokemon = async () => {
+    if (isLoadingMore || !hasMore) return;
+
+    try {
+      setIsLoadingMore(true);
+      const offset = currentPage * pokemonPerPage;
+      const data = await fetchWithCache(
+        `https://pokeapi.co/api/v2/pokemon?limit=${pokemonPerPage}&offset=${offset}`
+      );
+
+      const newPokemonDetails = await Promise.all(
+        data.results.map(async (p) => {
+          return await fetchWithCache(p.url);
+        })
+      );
+
+      setPokemon((prevPokemon) => [...prevPokemon, ...newPokemonDetails]);
+      setCurrentPage((prevPage) => prevPage + 1);
+      setHasMore(data.next !== null);
+      setIsLoadingMore(false);
+    } catch (e) {
+      console.error("Error fetching more Pokémon:", e);
+      setError(e.message);
+      setIsLoadingMore(false);
+    }
+  };
 
   useEffect(() => {
     const filtered = pokemon.filter((p) => {
@@ -80,13 +105,9 @@ function PokemonList() {
 
   const handleEvolutionClick = async (newPokemon) => {
     try {
-      const response = await fetch(
+      const data = await fetchWithCache(
         `https://pokeapi.co/api/v2/pokemon/${newPokemon.name}`
       );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
       setSelectedPokemon(data);
     } catch (error) {
       console.error("Error fetching evolved Pokémon data:", error);
@@ -124,6 +145,20 @@ function PokemonList() {
             onClose={handleCloseDetail}
             onEvolutionClick={handleEvolutionClick}
           />
+        )}
+        {hasMore &&
+          !isLoadingMore &&
+          filteredPokemon.length === pokemon.length && (
+            <div className="load-more-container">
+              <button className="load-more-button" onClick={loadMorePokemon}>
+                Load More Pokémon
+              </button>
+            </div>
+          )}
+        {isLoadingMore && (
+          <div className="loading-more-container">
+            <PokeBallLoading />
+          </div>
         )}
       </div>
     </div>
